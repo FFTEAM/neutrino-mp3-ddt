@@ -10,7 +10,8 @@ SUBDIRS = \
 	libtuxtxt \
 	libiw \
 	libdvbsub \
-	luaclient
+	luaclient \
+	jsoncpp
 
 if ENABLE_UPNP
 SUBDIRS += \
