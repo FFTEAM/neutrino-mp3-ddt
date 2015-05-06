@@ -479,32 +479,97 @@ std::string& str_replace(const std::string &search, const std::string &replace, 
 	return text;
 }
 
-std::string& htmlEntityDecode(std::string& text)
+std::string& htmlEntityDecode(std::string& text, bool removeTags)
 {
-	struct decode_table {
-		const char* code;
+	struct decode_table_s {
+		const char* utf8Code;
 		const char* htmlCode;
+		const unsigned int htmlCodeLen;
 	};
-	decode_table dt[] =
-	{
-		{" ",  "&nbsp;"},
-		{"&",  "&amp;"},
-		{"<",  "&lt;"},
-		{">",  "&gt;"},
-		{"\"", "&quot;"},
-		{"'",  "&apos;"},
-		{"€",  "&euro;"},
-		{"–",  "&#8211;"},
-		{"“",  "&#8220;"},
-		{"”",  "&#8221;"},
-		{"„",  "&#8222;"},
-		{"•",  "&#8226;"},
-		{"…",  "&#8230;"},
-		{NULL,  NULL}
-	};
-	for (int i = 0; dt[i].code != NULL; i++)
-		text = str_replace(dt[i].htmlCode, dt[i].code, text);
 
+	decode_table_s dt[] = {
+		{ " ",  		"&nbsp;",	6 },
+		{ "&",  		"&amp;",	5 },
+		{ "<",  		"&lt;",		4 },
+		{ ">",  		"&gt;",		4 },
+		{ "\"", 		"&quot;",	6 },
+		{ "'",  		"&apos;",	6 },
+		{ "€",  		"&euro;",	6 },
+		{ "\xe2\x80\xa6",	"&hellip;",	8 },
+		{ NULL,			NULL,		0 }
+	};
+
+	char t[text.length() + 1];
+	char *u = t;
+	const char *p = text.c_str();
+	while (*p) {
+		if (removeTags && *p == '<') {
+			while (*p && *p != '>')
+				p++;
+			if (*p)
+				p++;
+			continue;
+		}
+		if (p[0] == '&') {
+			if (p[1] == '#') {
+				p += 2;
+				const char *format;
+				if (p[0] == 'x' || p[0] == 'X') {
+					format = "%x";
+					p++;
+				} else
+					format = "%d";
+				unsigned int r = 0;
+				if (1 == sscanf(p, format, &r)) {
+					if (r < 0x80) {
+						u[0] = r & 0x7f;
+						u += 1;
+					} else if (r < 0x800) {
+						u[1] = 0x80 & (r & 0x3f);
+						r >>= 6;
+						u[0] = 0xC0 & r;
+						u += 2;
+					} else if (r < 0x10000) {
+						u[2] = 0x80 | (0x3f & r);
+						r >>= 6;
+						u[1] = 0x80 | (0x3f & r);
+						r >>= 6;
+						u[0] = 0xE0 | r;
+						u += 3;
+					} else if (r < 0x110000) {
+						u[3] = 0x80 | (0x3f & r);
+						r >>= 6;
+						u[2] = 0x80 | (0x3f & r);
+						r >>= 6;
+						u[1] = 0x80 | (0x3f & r);
+						r >>= 6;
+						u[0] = 0xF0 | r;
+						u += 4;
+					}
+				}
+				while(*p && *p != ';')
+					p++;
+				if (*p)
+					p++;
+				continue;
+			}
+
+			decode_table_s *d = dt;
+			while (d->utf8Code && strncmp(p, d->htmlCode, d->htmlCodeLen))
+				d++;
+			if (d->utf8Code) {
+				p += d->htmlCodeLen;
+				const char *v = d->utf8Code;
+				while (*v)
+					*u++ = *v++;
+				continue;
+			}
+		}
+
+		*u++ = *p++;
+	}
+	*u = 0;
+	text = std::string(t);
 	return text;
 }	
 
