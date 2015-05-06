@@ -45,13 +45,13 @@ const struct personalize_settings_t personalize_settings[SNeutrinoSettings::P_SE
 	{"personalize_radio_mode"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE}, 
 	{"personalize_timer"			, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE}, 
 	{"personalize_media"			, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE}, 
-	
-	{"personalize_games"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},	
-	{"personalize_tools"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
-	{"personalize_scripts"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
-	{"personalize_lua"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
 	{"personalize_settings"			, CPersonalizeGui::PERSONALIZE_PROTECT_MODE_NOT_PROTECTED},
 	{"personalize_service"			, CPersonalizeGui::PERSONALIZE_PROTECT_MODE_NOT_PROTECTED},
+	{"personalize_bluepanel"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
+	{"personalize_lua"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
+	{"personalize_tools"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
+	{"personalize_scripts"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
+	{"personalize_games"			, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},	
 	{"personalize_sleeptimer"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE}, 
 	{"personalize_standby"			, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_reboot"			, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
@@ -81,11 +81,14 @@ const struct personalize_settings_t personalize_settings[SNeutrinoSettings::P_SE
 	{"personalize_reload_channels"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_bouquet_edit"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_reset_channels"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE}, 
-	{"personalize_restart"			, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
-	{"personalize_reload_plugins"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_restart_tuner"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
-	{"personalize_infomenu_service"		, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
+	{"personalize_restart_cam"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
+	{"personalize_reload_plugins"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
+	{"personalize_service_scripts"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_softupdate"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
+	{"personalize_infomenu_service"		, CPersonalizeGui::PERSONALIZE_MODE_NOTVISIBLE},
+	{"personalize_restart"			, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
+	{"personalize_boot_spark"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	
 	//media menu
 	{"personalize_media_menu"		, CPersonalizeGui::PERSONALIZE_PROTECT_MODE_NOT_PROTECTED},
@@ -100,6 +103,7 @@ const struct personalize_settings_t personalize_settings[SNeutrinoSettings::P_SE
 	{"personalize_mplayer_fileplay"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_mplayer_inetplay"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	{"personalize_mplayer_ytplay"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
+	{"personalize_mplayer_nkplay"		, CPersonalizeGui::PERSONALIZE_MODE_VISIBLE},
 	
 	//key
 	{"personalize_feat_key_fav"		, CPersonalizeGui::PERSONALIZE_FEAT_KEY_GREEN},
@@ -111,10 +115,10 @@ const struct personalize_settings_t personalize_settings[SNeutrinoSettings::P_SE
 	{"personalize_usermenu_show_cancel"	, true},
 
 	//plugin types
-	{"personalize_usermenu_plugin_type_games"	, false},
+	{"personalize_usermenu_plugin_type_lua"		, false},
 	{"personalize_usermenu_plugin_type_tools"	, false},
 	{"personalize_usermenu_plugin_type_scripts"	, false},
-	{"personalize_usermenu_plugin_type_lua"		, false},
+	{"personalize_usermenu_plugin_type_games"	, false},
 };
 
 CScanSettings::CScanSettings(void)
