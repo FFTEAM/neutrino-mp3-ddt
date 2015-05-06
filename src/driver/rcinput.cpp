@@ -72,7 +72,7 @@
 #if HAVE_SPARK_HARDWARE
 /* this relies on event0 being the AOTOM frontpanel driver device
  * TODO: what if another input device is present? */
-#ifdef BOXMODEL_SPARK
+#if defined (BOXMODEL_SPARK) || defined (BOXMODEL_SPARK7162)
 const char * const RC_EVENT_DEVICE[NUMBER_OF_EVENT_DEVICES] = {"/dev/input/nevis_ir", "/dev/input/event0"};
 #else
 const char * const RC_EVENT_DEVICE[NUMBER_OF_EVENT_DEVICES] = {"/dev/input/nevis_ir"};
@@ -1586,7 +1586,11 @@ const char * CRCInput::getSpecialKeyName(const unsigned int key)
 			case RC_timeshift:
 				return "timeshift";
 			case RC_mode:
+#if HAVE_SPARK_HARDWARE
+				return "v.format";
+#else
 				return "mode";
+#endif
 			case RC_record:
 				return "record";
 			case RC_pause:
@@ -1617,8 +1621,44 @@ const char * CRCInput::getSpecialKeyName(const unsigned int key)
 				return "analog off";
 			case RC_www:
 				return "www";
+			case RC_find:
+				return "find";
+			case RC_pip:
+				return "pip";
+			case RC_archive:
+				return "archive";
+			case RC_slow:
+				return "slow";
+			case RC_fastforward:
+				return "fast";
 			case RC_playmode:
 				return "play mode";
+			case RC_usb:
+				return "usb";
+			case RC_timer:
+				return "time";
+			case RC_f1:
+				return "f1";
+			case RC_f2:
+				return "f2";
+			case RC_f3:
+				return "f3";
+			case RC_f4:
+				return "f4";
+			case RC_prog1:
+				return "prog1";
+			case RC_prog2:
+				return "prog2";
+			case RC_prog3:
+				return "prog3";
+			case RC_aux:
+#if HAVE_SPARK_HARDWARE
+				return "tv/sat";
+#else
+				return "aux";
+#endif
+			case RC_prog4:
+				return "prog4";
 			case RC_sub:
 				return "sub";
 			case RC_pos:
@@ -1653,8 +1693,15 @@ const char *CRCInput::getKeyNameC(const unsigned int key)
 **************************************************************************/
 int CRCInput::translate(int code)
 {
+	if (code == g_settings.key_help)
+		return RC_help;
 	switch(code)
 	{
+#if HAVE_SPARK_HARDWARE || HAVE_DUCKBOX_HARDWARE
+		case KEY_EXIT:
+		case KEY_HOME:
+			return RC_home;
+#endif
 		case 0x100: // FIXME -- needed?
 			return RC_up;
 		case 0x101: // FIXME -- needed?
