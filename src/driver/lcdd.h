@@ -69,7 +69,7 @@ typedef enum
 } fp_icon;
 #define CVFD CLCD
 
-#ifdef BOXMODEL_SPARK7162
+#ifdef HAVE_SPARK_HARDWARE
 typedef enum
 {
 	SPARK_PLAY_FASTBACKWARD = 1,
@@ -280,7 +280,7 @@ class CLCD
 		void Lock();
 		void Unlock();
 		void Clear();
-#ifdef BOXMODEL_SPARK7162
+#ifdef HAVE_SPARK_HARDWARE
 		void SetIcons(int icon, bool show);
 		void UpdateIcons();
 		void ShowDiskLevel();

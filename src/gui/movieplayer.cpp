@@ -963,7 +963,7 @@ bool CMoviePlayerGui::PlayFileStart(void)
 		repeat_mode = (repeat_mode_enum) g_settings.movieplayer_repeat_on;
 		playstate = CMoviePlayerGui::PLAY;
 		CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, true);
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 		CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
 		CVFD::getInstance()->ShowIcon(FP_ICON_FF, false);
 		CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, false);
@@ -988,7 +988,7 @@ bool CMoviePlayerGui::PlayFileStart(void)
 				if (g_settings.timeshift_pause)
 				{
 					playstate = CMoviePlayerGui::PAUSE;
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 					CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, false);
 					CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
 					CVFD::getInstance()->ShowIcon(FP_ICON_FF, false);
@@ -1198,7 +1198,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 			}
 			if (playstate > CMoviePlayerGui::PLAY) {
 				playstate = CMoviePlayerGui::PLAY;
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 				CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, true);
 				CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, false);
 				CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
@@ -1214,7 +1214,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 			if (playstate == CMoviePlayerGui::PAUSE) {
 				playstate = CMoviePlayerGui::PLAY;
 				//CVFD::getInstance()->ShowIcon(VFD_ICON_PAUSE, false);
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 				CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, true);
 				CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, false);
 				CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
@@ -1225,7 +1225,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 			} else {
 				playstate = CMoviePlayerGui::PAUSE;
 				//CVFD::getInstance()->ShowIcon(VFD_ICON_PAUSE, true);
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 				CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, false);
 				CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, true);
 				CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
@@ -1261,7 +1261,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 			int newspeed;
 			if (msg == (neutrino_msg_t) g_settings.mpkey_rewind) {
 				newspeed = (speed >= 0) ? -1 : (speed - 1);
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 				CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, true);
 				CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, false);
 				CVFD::getInstance()->ShowIcon(FP_ICON_FR, true);
@@ -1269,7 +1269,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 #endif
 			} else {
 				newspeed = (speed <= 0) ? 2 : (speed + 1);
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 				CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, true);
 				CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, false);
 				CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
@@ -1474,7 +1474,7 @@ void CMoviePlayerGui::PlayFileEnd(bool restore)
 
 	CVFD::getInstance()->ShowIcon(FP_ICON_PLAY, false);
 	CVFD::getInstance()->ShowIcon(FP_ICON_PAUSE, false);
-#if HAVE_DUCKBOX_HARDWARE || BOXMODEL_SPARK7162
+#if HAVE_DUCKBOX_HARDWARE || HAVE_SPARK_HARDWARE
 	CVFD::getInstance()->ShowIcon(FP_ICON_FR, false);
 	CVFD::getInstance()->ShowIcon(FP_ICON_FF, false);
 #endif
