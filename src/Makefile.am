@@ -103,6 +103,7 @@ neutrino_LDADD = \
 	$(top_builddir)/lib/libtuxtxt/libtuxtxt.a \
 	$(top_builddir)/lib/libdvbsub/libdvbsub.a \
 	$(top_builddir)/lib/libiw/libiw.a \
+	$(top_builddir)/lib/jsoncpp/libjsoncpp.a \
 	@CURL_LIBS@ \
 	@FREETYPE_LIBS@ \
 	@PNG_LIBS@ \
@@ -119,6 +120,9 @@ neutrino_LDADD = \
 
 if ENABLE_GRAPHLCD
 neutrino_LDADD += -lglcddrivers -lglcdgraphics -lusb-1.0
+endif
+if ENABLE_SHAIRPLAY
+neutrino_LDADD += -lshairplay
 endif
 if ENABLE_GIFLIB
 neutrino_LDADD += -lgif

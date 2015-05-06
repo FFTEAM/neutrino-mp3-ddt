@@ -33,14 +33,24 @@
 #ifndef __neutrino__
 #define __neutrino__
 
+#include "config.h"
+
 #include <neutrinoMessages.h>
+#include "driver/neutrinofonts.h"
+#include "system/setting_helpers.h"
+#include "system/configure_network.h"
 #include "daemonc/remotecontrol.h"    /* st_rmsg      */
 #include "gui/channellist.h"          /* CChannelList */
 #include "gui/personalize.h"
+#include "gui/rc_lock.h"
 #include "gui/user_menue.h"
 #include <timerdclient/timerdtypes.h>
 #include <sigc++/signal.h>
+#include "gui/timerlist.h"
+
 #include <string>
+// Forward declarations instead of includes:
+class CShairPlay;
 
 #define ANNOUNCETIME (1 * 60)
 
@@ -82,6 +92,7 @@ private:
 
 	int				m_idletime;
 	bool				m_screensaver;
+	CMenuWidget			*mainMenu;
 
 	int				mode;
 	int				lastMode;
@@ -172,6 +183,11 @@ public:
 	CChannelList			*TVchannelList;
 	CChannelList			*RADIOchannelList;
 	CChannelList			*channelList;
+#if ENABLE_SHAIRPLAY
+	CShairPlay			*shairPlay;
+	bool				shairplay_active;
+	bool				shairplay_enabled_cur;
+#endif
 	bool				timer_wakeup;
 
 	static CNeutrinoApp* getInstance();

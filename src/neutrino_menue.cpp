@@ -45,6 +45,7 @@
 #include "gui/audio_setup.h"
 #include "gui/audio_select.h"
 #include "gui/bedit/bouqueteditor_bouquets.h"
+#include "gui/bluepanel.h"
 #include "gui/bouquetlist.h"
 #if !HAVE_SPARK_HARDWARE
 #include "gui/cam_menu.h"
@@ -82,6 +83,8 @@
 #include "gui/videosettings.h"
 #include "driver/record.h"
 #include "driver/display.h"
+#include "gui/opkg_manager.h"
+#include <hardware_caps.h>
 
 
 extern CPlugins       * g_PluginList;
@@ -183,11 +186,12 @@ void CNeutrinoApp::InitMenuMain()
 	personalize.addItem(MENU_MAIN, media, &g_settings.personalize[SNeutrinoSettings::P_MAIN_MEDIA]);
 
 	CMenuForwarder * mf;
-	//games
-	bool show_games = g_PluginList->hasPlugin(CPlugins::P_TYPE_GAME);
-	mf = new CMenuForwarder(LOCALE_MAINMENU_GAMES, show_games, NULL, new CPluginList(LOCALE_MAINMENU_GAMES,CPlugins::P_TYPE_GAME));
-	mf->setHint(NEUTRINO_ICON_HINT_GAMES, LOCALE_MENU_HINT_GAMES);
-	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_GAMES]);
+
+	//lua
+	bool show_lua = g_PluginList->hasPlugin(CPlugins::P_TYPE_LUA);
+	mf = new CMenuForwarder(LOCALE_MAINMENU_LUA, show_lua, NULL, new CPluginList(LOCALE_MAINMENU_LUA,CPlugins::P_TYPE_LUA));
+	mf->setHint(NEUTRINO_ICON_HINT_SCRIPTS, LOCALE_MENU_HINT_LUA);
+	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_LUA]);
 
 	//tools
 	bool show_tools = g_PluginList->hasPlugin(CPlugins::P_TYPE_TOOL);
@@ -201,11 +205,12 @@ void CNeutrinoApp::InitMenuMain()
 	mf->setHint(NEUTRINO_ICON_HINT_SCRIPTS, LOCALE_MENU_HINT_SCRIPTS);
 	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_SCRIPTS]);
 
-	//lua
-	bool show_lua = g_PluginList->hasPlugin(CPlugins::P_TYPE_LUA);
-	mf = new CMenuForwarder(LOCALE_MAINMENU_LUA, show_lua, NULL, new CPluginList(LOCALE_MAINMENU_LUA,CPlugins::P_TYPE_LUA));
-	mf->setHint(NEUTRINO_ICON_HINT_SCRIPTS, LOCALE_MENU_HINT_LUA);
-	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_LUA]);
+	//games
+	bool show_games = g_PluginList->hasPlugin(CPlugins::P_TYPE_GAME);
+	mf = new CMenuForwarder(LOCALE_MAINMENU_GAMES, show_games, NULL, new CPluginList(LOCALE_MAINMENU_GAMES,CPlugins::P_TYPE_GAME));
+	mf->setHint(NEUTRINO_ICON_HINT_GAMES, LOCALE_MENU_HINT_GAMES);
+	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_GAMES]);
+
 
 	//separator
 	personalize.addSeparator(MENU_MAIN);
@@ -222,6 +227,11 @@ void CNeutrinoApp::InitMenuMain()
 	mf->setHint(NEUTRINO_ICON_HINT_SERVICE, LOCALE_MENU_HINT_SERVICE);
 	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_SERVICE], false, CPersonalizeGui::PERSONALIZE_SHOW_AS_ACCESS_OPTION);
 
+	//ffteambluepanel
+	mf = new CMenuForwarder(LOCALE_MAINMENU_BLUEPANEL, true, NULL, new CBluePanel());
+	mf->setHint(NEUTRINO_ICON_FEATURES, LOCALE_MENU_HINT_BLUEPANEL);
+	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_BLUEPANEL]);
+
 	//separator
 	personalize.addSeparator(MENU_MAIN);
 
@@ -234,7 +244,8 @@ void CNeutrinoApp::InitMenuMain()
 	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_SLEEPTIMER]);
 
 	//reboot
-	mf = new CMenuForwarder(LOCALE_MAINMENU_REBOOT, true, NULL, this, "reboot");
+	mf = new CMenuForwarder(LOCALE_MAINMENU_REBOOT, true, NULL, this, "reboot",
+		(g_settings.longkeypress_duration == LONGKEYPRESS_OFF) ? (unsigned long)CRCInput::RC_nokey : (CRCInput::RC_standby | CRCInput::RC_Repeat));
 	mf->setHint(NEUTRINO_ICON_HINT_REBOOT, LOCALE_MENU_HINT_REBOOT);
 	personalize.addItem(MENU_MAIN, mf, &g_settings.personalize[SNeutrinoSettings::P_MAIN_REBOOT]);
 
@@ -301,7 +312,7 @@ void CNeutrinoApp::InitMenuSettings()
 	personalize.addItem(MENU_SETTINGS, mf, &show, false, CPersonalizeGui::PERSONALIZE_SHOW_NO);
 
 	// miscSettings
-	mf = new CMenuForwarder(LOCALE_MAINSETTINGS_MISC, true, NULL, new CMiscMenue() , NULL, CRCInput::RC_blue);
+	mf = new CMenuForwarder(LOCALE_MAINSETTINGS_MISC, true, NULL, new CMiscMenue(), NULL, CRCInput::RC_blue);
 	mf->setHint(NEUTRINO_ICON_HINT_EXTENDED, LOCALE_MENU_HINT_EXTENDED);
 	personalize.addItem(MENU_SETTINGS, mf, &g_settings.personalize[SNeutrinoSettings::P_MSET_MISC]);
 
@@ -433,15 +444,17 @@ void CNeutrinoApp::InitMenuService()
 	//separator
 	personalize.addSeparator(MENU_SERVICE);
 
-	//restart neutrino
-	mf = new CMenuForwarder(LOCALE_SERVICEMENU_RESTART   , true, NULL, this, "restart", CRCInput::RC_standby);
-	mf->setHint(NEUTRINO_ICON_HINT_SOFT_RESTART, LOCALE_MENU_HINT_SOFT_RESTART);
-	personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_RESTART]);
-
 	//restart tuner
 	mf = new CMenuForwarder(LOCALE_SERVICEMENU_RESTART_TUNER, true, NULL, this, "restarttuner");
 	mf->setHint(NEUTRINO_ICON_HINT_RELOAD_CHANNELS, LOCALE_MENU_HINT_RESTART_TUNER);
 	personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_RESTART_TUNER]);
+
+	//restart cam
+	if (!access("/etc/init.d/softcam", X_OK)) {
+		mf = new CMenuForwarder(LOCALE_SERVICEMENU_RESTART_CAM, true, NULL, this, "restartcam");
+		mf->setHint(NEUTRINO_ICON_HINT_RELOAD_CHANNELS, LOCALE_MENU_HINT_RESTART_CAM);
+		personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_RESTART_CAM]);
+	}
 
 	//reload plugins
 	mf = new CMenuForwarder(LOCALE_SERVICEMENU_GETPLUGINS, true, NULL, this, "reloadplugins");
@@ -450,16 +463,47 @@ void CNeutrinoApp::InitMenuService()
 
 	//separator
 	personalize.addSeparator(MENU_SERVICE);
+	//firmware update via opkg
+	if (COPKGManager::hasOpkgSupport()) {
+		mf = new CMenuForwarder(LOCALE_SERVICEMENU_UPDATE, true, NULL, new COPKGManager());
+		mf->setHint(NEUTRINO_ICON_HINT_SW_UPDATE, LOCALE_MENU_HINT_OPKG);
+		personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_SOFTUPDATE]);
 
+ 		//separator
+		personalize.addSeparator(MENU_SERVICE);
+	}
+
+	//firmware update
+	mf = new CMenuForwarder(LOCALE_SERVICEMENU_UPDATE, true, NULL, new CSoftwareUpdate());
+	mf->setHint(NEUTRINO_ICON_HINT_SW_UPDATE, LOCALE_MENU_HINT_SW_UPDATE);
+	personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_SOFTUPDATE]);
 	//2nd section***************************************************************************************************
+	//restart neutrino
+	mf = new CMenuForwarder(LOCALE_SERVICEMENU_RESTART   , true, NULL, this, "restart", CRCInput::RC_standby);
+	mf->setHint(NEUTRINO_ICON_HINT_SOFT_RESTART, LOCALE_MENU_HINT_SOFT_RESTART);
+	personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_RESTART]);
 
 	//infomenu
 	mf = new CMenuForwarder(LOCALE_MESSAGEBOX_INFO, true, NULL, new CInfoMenu(), NULL, CRCInput::RC_info);
 	mf->setHint(NEUTRINO_ICON_HINT_INFO, LOCALE_MENU_HINT_INFO);
 	personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_SERVICE_INFOMENU]);
 
-	//firmware update
-	mf = new CMenuForwarder(LOCALE_SERVICEMENU_UPDATE, true, NULL, new CSoftwareUpdate());
-	mf->setHint(NEUTRINO_ICON_HINT_SW_UPDATE, LOCALE_MENU_HINT_SW_UPDATE);
-	personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_SOFTUPDATE]);
+#if HAVE_SPARK_HARDWARE
+	//boot spark now
+	if (g_info.hw_caps->boxtype == 7111) {
+		mf = new CMenuForwarder(LOCALE_SERVICEMENU_BOOT_SPARK, true, NULL, this, "bootspark");
+		mf->setHint(NEUTRINO_ICON_HINT_SPARK, LOCALE_MENU_HINT_BOOT_SPARK);
+		personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_BOOT_SPARK]);
+	}
+#endif
+
+#if HAVE_SPARK_HARDWARE
+	//boot spark now
+	if (g_info.hw_caps->boxtype == 7162) {
+		mf = new CMenuForwarder(LOCALE_SERVICEMENU_BOOT_SPARK, true, NULL, this, "bootspark");
+		mf->setHint(NEUTRINO_ICON_HINT_SPARK, LOCALE_MENU_HINT_BOOT_SPARK);
+		personalize.addItem(MENU_SERVICE, mf, &g_settings.personalize[SNeutrinoSettings::P_MSER_BOOT_SPARK]);
+	}
+#endif
+
 }

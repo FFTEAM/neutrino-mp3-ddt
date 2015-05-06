@@ -66,6 +66,7 @@
 
 #if !HAVE_GENERIC_HARDWARE
 #include "gui/3dsetup.h"
+#include "gui/adzap.h"
 #include "gui/psisetup.h"
 #endif
 #include "gui/audiomute.h"
@@ -130,6 +131,8 @@
 #ifdef ENABLE_GRAPHLCD
 #include <driver/nglcd.h>
 #endif
+#include <system/safe_system.h>
+#define CONF_VERSION 1
 
 #include <timerdclient/timerdclient.h>
 #include <timerd/timermanager.h>
@@ -366,7 +369,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 		}
 	}
 	parentallocked = !access(NEUTRINO_PARENTALLOCKED_FILE, R_OK);
-
+	g_settings.conf_version = configfile.getInt32("conf_version", 0);
 	g_settings.softupdate_autocheck = configfile.getBool("softupdate_autocheck" , false);
 
 	// video
@@ -572,6 +575,8 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.epg_old_events       = configfile.getInt32("epg_old_events", 1);
 	g_settings.epg_max_events       = configfile.getInt32("epg_max_events", 30000);
 	g_settings.epg_dir              = configfile.getString("epg_dir", "/media/sda1/epg");
+        g_settings.epg_enable_freesat   = configfile.getBool("epg_enable_freesat", false);
+        g_settings.epg_enable_viasat   = configfile.getBool("epg_enable_viasat", false);
 	// NTP-Server for sectionsd
 	g_settings.network_ntpserver    = configfile.getString("network_ntpserver", "time.fu-berlin.de");
 	g_settings.network_ntprefresh   = configfile.getString("network_ntprefresh", "30" );
@@ -727,6 +732,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 
 	g_settings.logo_hdd_dir = configfile.getString( "logo_hdd_dir", "/media/sda1/logos" );
 
+	g_settings.streaming_server_url = configfile.getString("streaming_server_url", "");
 	g_settings.webtv_xml.clear();
 	int webtv_count = configfile.getInt32("webtv_xml_count", 0);
 	if (webtv_count) {
@@ -943,6 +949,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	}
 	g_settings.epg_search_history_size = g_settings.epg_search_history.size();
 
+	g_settings.adzap_zapBackPeriod = configfile.getInt32("adzap_zapBackPeriod", 180);
 
 	// USERMENU -> in system/settings.h
 	//-------------------------------------------
@@ -1037,6 +1044,8 @@ void CNeutrinoApp::saveSetup(const char * fname)
 	if(!scansettings.saveSettings(NEUTRINO_SCAN_SETTINGS_FILE)) {
 		dprintf(DEBUG_NORMAL, "error while saving scan-settings!\n");
 	}
+
+	configfile.setInt32("conf_version", CONF_VERSION);
 
 	//video
 	configfile.setInt32( "video_Mode", g_settings.video_Mode );
@@ -1306,6 +1315,7 @@ void CNeutrinoApp::saveSetup(const char * fname)
 
 	configfile.setString ( "logo_hdd_dir", g_settings.logo_hdd_dir );
 
+	configfile.setString ( "streaming_server_url", g_settings.streaming_server_url);
 	int webtv_count = 0;
 	for (std::list<std::string>::iterator it = g_settings.webtv_xml.begin(); it != g_settings.webtv_xml.end(); ++it) {
 		std::string k = "webtv_xml_" + to_string(webtv_count);
@@ -1450,6 +1460,7 @@ void CNeutrinoApp::saveSetup(const char * fname)
 	configfile.setInt64("startchanneltv_id", g_settings.startchanneltv_id);
 	configfile.setInt64("startchannelradio_id", g_settings.startchannelradio_id);
 	configfile.setInt32("uselastchannel", g_settings.uselastchannel);
+	configfile.setInt32("adzap_zapBackPeriod", g_settings.adzap_zapBackPeriod);
 	//epg search
 	g_settings.epg_search_history_size = g_settings.epg_search_history.size();
 	if (g_settings.epg_search_history_size > g_settings.epg_search_history_max)
