@@ -98,6 +98,14 @@ GENRE.TRAVEL_HOBBIES.6 advertisement/shopping
 GENRE.TRAVEL_HOBBIES.7 gardening
 GENRE.UNKNOWN unknown
 adzap AdZap
+adzap.announce In 15 seconds, the channel will be switched to
+adzap.cancel Timer was cancelled
+adzap.disable Deactivate
+adzap.enable Activate once
+adzap.minute minute
+adzap.minutes minutes
+adzap.monitor Stay active during current broadcast
+adzap.switchback Switch back after
 apidselector.head Select language
 audio.srs_algo Type
 audio.srs_algo_heavy Heavy
@@ -183,6 +191,29 @@ audioplayer.shuffle shuffle
 audioplayer.spectrum lcd a-spectrum
 audioplayer.stop Stop
 audioplayer.title_artist Title, Artist
+audioplayerpicsettings.general Audioplayer/Picviewer/Movieplayer
+bluepanel.emu Cam Menue
+bluepanel.emu.none not aktiv
+bluepanel.emu.mgcamd MGCamd
+bluepanel.emu.incubus IncubusCamd
+bluepanel.emu.camd3 Camd3
+bluepanel.emu.mbox Mbox
+bluepanel.emu.oscam Oscam
+bluepanel.emu.osemu Osemu
+bluepanel.emu.wicard Wicard
+bluepanel.emu.select Cam Select
+bluepanel.emu.restart restart Cam
+bluepanel.emu.disable deactivate Cam
+bluepanel.swap Swap Menue
+bluepanel.swap.swapram SWAPRAM
+bluepanel.swap.swappart SWAPPART
+bluepanel.swap.swapfile SWAPFILE
+bluepanel.swap.select Swap Select
+bluepanel.swap.onoff SWAP
+bluepanel.fritzcall Fritzcall Menue
+bluepanel.fritzcall.select Fritzcallmonitor
+bluepanel.fritzcall.on On
+bluepanel.fritzcall.off Off
 bookmarkmanager.delete delete
 bookmarkmanager.name bookmarks
 bookmarkmanager.rename rename
@@ -197,7 +228,7 @@ bouqueteditor.lock Lock
 bouqueteditor.move Move
 bouqueteditor.move_to Move to
 bouqueteditor.name Bouquet editor
-bouqueteditor.newbouquetname New name
+bouqueteditor.newbouquetname New name of bouquets
 bouqueteditor.rename Rename
 bouqueteditor.return ready
 bouqueteditor.savechanges? Do you want to save the changes?
@@ -899,11 +930,12 @@ lua.function_deprecated1 Caution!
 lua.function_deprecated2 Function
 lua.function_deprecated3 is deprecated,\n                      please use
 mainmenu.audioplayer Audioplayer
+mainmenu.bluepanel FFTeam Bluepanel
 mainmenu.channels Channels
 mainmenu.clearsectionsd Clear EPG Cache
-mainmenu.games Games
+mainmenu.games Games >
 mainmenu.head Main Menu
-mainmenu.lua Lua Plugins
+mainmenu.lua Lua Plugins >
 mainmenu.media Media
 mainmenu.movieplayer Movieplayer
 mainmenu.pausesectionsd Read EPG
@@ -913,14 +945,14 @@ mainmenu.reboot Reboot
 mainmenu.recording Recording
 mainmenu.recording_start start
 mainmenu.recording_stop stop
-mainmenu.scripts Scripts
+mainmenu.scripts Scripts >
 mainmenu.service Service
 mainmenu.settings Settings
 mainmenu.shutdown Shutdown (deep standby)
 mainmenu.shutdown_menu Shutdown
 mainmenu.sleeptimer SleepTimer
 mainmenu.standby Standby
-mainmenu.tools Tools
+mainmenu.tools Tools-Plugins >
 mainmenu.tvmode TV-Mode
 mainmenu.tvradio_switch TV-Radio Switch
 mainsettings.audio Audio
@@ -942,6 +974,7 @@ menu.back Back
 menu.cancel Cancel
 menu.hint_a_pic Configure audio player, picture viewer, movie player and more
 menu.hint_accept_other_remotes Disable to ignore other remote controls
+menu.hint_adzap AdZap will switch back to the current channel when the selected time is up
 menu.hint_aplay Audio player
 menu.hint_aplay_setup Change title display, start directory, screen saver and more
 menu.hint_audio Audio output, DD\nSRS True volume options
@@ -974,6 +1007,8 @@ menu.hint_back_brief Return to previous menu
 menu.hint_backlight Configure buttons backlight
 menu.hint_backup Backup configs and channels to selected dir
 menu.hint_bedit Edit favorites and bouquets
+menu.hint_bluepanel FFTeam Bluepanel
+menu.hint_boot_spark Don't boot SPARK unless you're familiar with the way back to Neutrino.
 menu.hint_buildinfo Information about compilers, compiler flags, kernel
 menu.hint_cache_txt Start teletext caching after channel switch
 menu.hint_cec_mode CEC mode
@@ -1207,6 +1242,8 @@ menu.hint_network IP address, gateway, DNS, Time sync\nNetwork shares and servic
 menu.hint_new_zap_mode Allow channel switch while browsing\n(toggle mode with 'mute' in channel list)
 menu.hint_next Continue to next menu\nPress menu key to close all menus
 menu.hint_next_brief Continue to next menu
+menu.hint_nkplay Play netzkino.de movies
+menu.hint_nkplayback_setup Configure Netzkino-specific options, e.g. an upper limit for search results
 menu.hint_numeric_adjust Adjust channel list mode on numeric zap
 menu.hint_opkg Install or update software packages
 menu.hint_opkg_upgrade Updates all installed packages to the most recent version available
@@ -1278,6 +1315,7 @@ menu.hint_recording Recording and timeshift options\nTimers safety, audio pids o
 menu.hint_reload_channels Reload channels from flash
 menu.hint_reload_plugins Reload plugins from flash
 menu.hint_reset Reset Neutrino GUI settings to defaults\nTuner config and channels not affected
+menu.hint_restart_cam Restart the Conditional Access Module
 menu.hint_restart_tuner Restart the internal tuner. This may help if you're experiencing reception problems
 menu.hint_restore Restore files from selected backup
 menu.hint_rotor_swap Swap rotor east/west directions\nin motor control
@@ -1547,6 +1585,7 @@ miscsettings.progressbar_timescale_red red
 miscsettings.progressbar_timescale_red_green from red to green
 miscsettings.progressbar_timescale_yellow yellow
 miscsettings.radiotext Radiotext
+miscsettings.restart The change will be active after restart.
 miscsettings.shutdown_count In standby, switch off after
 miscsettings.shutdown_count_hint1 time (in minutes) to switch from standby
 miscsettings.shutdown_count_hint2 to deep standby (0 = off).
@@ -1701,7 +1740,11 @@ moviebrowser.menu_parental_lock_rate_head Lock movies from
 moviebrowser.menu_save Save changes
 moviebrowser.menu_save_all Start update of movie info files
 moviebrowser.menu_truncate Truncate movie
+moviebrowser.nk_categories Select category
+moviebrowser.nk_error Failed to load Netzkino feed
+moviebrowser.nk_protocol Protocol
 moviebrowser.option_browser Browser Options
+moviebrowser.program_selection Program
 moviebrowser.reload_at_start Reload movie info at start
 moviebrowser.remount_at_start Remount at start
 moviebrowser.scan_for_movies Scan for Movies ...
@@ -1735,6 +1778,7 @@ moviebrowser.truncate_failed Truncate failed.
 moviebrowser.truncate_failed_playing Impossible to truncate playing movie.
 moviebrowser.truncating Truncating movie, please wait ...
 moviebrowser.ts_only Show recordings only
+moviebrowser.unlimited unlimited
 moviebrowser.update_if_dest_empty_only Copy if destination is empty only
 moviebrowser.use_dir Use directory
 moviebrowser.use_movie_dir Use movie directory
@@ -1743,6 +1787,7 @@ moviebrowser.yt_cache Downloads
 moviebrowser.yt_cache_add Download of\n%s\nis scheduled.
 moviebrowser.yt_cancel Cancel all
 moviebrowser.yt_cancel_transfer Cancel download?
+moviebrowser.yt_charts Charts
 moviebrowser.yt_clear Clear
 moviebrowser.yt_completed Completed downloads
 moviebrowser.yt_concurrent_connections Concurrent connections
@@ -1775,7 +1820,9 @@ movieplayer.chapters Chapters
 movieplayer.defplugin Start-Plugin
 movieplayer.fileplayback File play
 movieplayer.head Movieplayer
+movieplayer.nkplayback Netzkino
 movieplayer.starting Starting playback...
+movieplayer.stopping Stopping playback...
 movieplayer.titles Titles
 movieplayer.toomanybookmarks There are too many bookmarks.\nYou need to delete one of them first.
 movieplayer.tshelp1 Stop
@@ -1839,7 +1886,7 @@ networkmenu.ssid_scan WLAN network scan
 networkmenu.ssid_scan_error No WLAN networks are found.
 networkmenu.ssid_scan_wait WLAN network scan in progress...
 networkmenu.test Test network now
-neutrino_starting Neutrino starting...
+neutrino_starting FFTEAM-Neutrino starting...
 nfs.alreadymounted directory already mounted
 nfs.automount Mount on startup
 nfs.dir directory/share
@@ -1868,6 +1915,8 @@ nvod.starting (starting in %d min)
 nvodselector.directormode Direct-Mode
 nvodselector.head Select starting-time
 nvodselector.subservice Select Subservice
+onoff.on On
+onoff.off Off
 opkg.button.expert_off Standard mode
 opkg.button.expert_on Expert mode
 opkg.button.info Package information
@@ -1908,7 +1957,7 @@ parentallock.menu Menu Security
 parentallock.never never
 parentallock.onsignal on broadcasted lock
 parentallock.parentallock Parental lock
-parentallock.prompt prompt for PIN
+parentallock.prompt Prompt for PIN
 parentallock.zaptime Zap time for locked bouquets (minutes)
 personalize.access Access options
 personalize.apply_settings Apply changes?
@@ -1990,9 +2039,11 @@ plugins.hdd_dir Plugin HDD dir.
 plugins.result plugin output
 plugintype.disabled Disabled
 plugintype.game Game
-plugintype.lua Lua plugin
+plugintype.lua Lua Plugin
 plugintype.script Script
 plugintype.tool Tool
+protocol.f4v F4V
+protocol.http HTTP
 rass.head Radio Screen Show
 rclock.lockmsg Your box remote control will be locked.\n To unlock it, press <RED> \n and <MENU> on your remote control.
 rclock.menueadd Lock RC
@@ -2185,6 +2236,11 @@ screenshot.res Resolution
 screenshot.scale Scale
 screenshot.tv Video
 screenshot.video Video in the background
+screenshot.web yWeb
+servicemenu.boot_params_ask Do you really want to boot SPARK?
+servicemenu.boot_params_head Changing boot parameters
+servicemenu.boot_params_hint Do not switch off your set-top box!
+servicemenu.boot_spark Boot SPARK now
 servicemenu.getplugins Reload plugins
 servicemenu.getplugins_hint Reloading plugins,\nplease be patient.
 servicemenu.head Service
@@ -2192,9 +2248,11 @@ servicemenu.imageinfo Image info
 servicemenu.reload Reload channel lists
 servicemenu.reload_hint Reloading channel lists,\nplease be patient.
 servicemenu.restart Soft restart
+servicemenu.restart_cam Restart CAM
 servicemenu.restart_hint Restarting, please wait
 servicemenu.restart_refused_recording Can't restart, recording in progress
 servicemenu.restart_tuner Restart tuner
+servicemenu.restarting_cam Restarting CAM
 servicemenu.restarting_tuner Restarting tuner
 servicemenu.scants Servicescan
 servicemenu.update Software Update
@@ -2211,6 +2269,7 @@ settings.pos_bottom_left bottom left
 settings.pos_bottom_right bottom right
 settings.pos_default_center center
 settings.pos_higher_center higher center
+settings.pos_off off
 settings.pos_top_center top center
 settings.pos_top_left top left
 settings.pos_top_right top right
@@ -2237,6 +2296,7 @@ streaminfo.head Stream-Information
 streaminfo.not_available not available
 streaminfo.resolution Resolution
 streaminfo.signal Receipt signal
+streaminfo.url URL
 streaming.busy One or several recording processes are active.\nIf you encounter this message and no recording is active, please restart Neutrino.
 streaming.dir_not_writable The recording directory is not writable.\nRecording will not work.
 streaming.overflow Record buffer overflow, consider to stop some records
@@ -2246,6 +2306,7 @@ stringinput.backspace Backspace
 stringinput.caps caps / no caps
 stringinput.clear clear all
 stringinput.insert Insert
+stringinput.layout Layout
 stringinput.save Save
 subtitles.charset Charset
 subtitles.head Subtitles
@@ -2308,7 +2369,7 @@ timerlist.repeatcount repeats
 timerlist.repeatcount.help1 amount of timer repeats
 timerlist.repeatcount.help2 0 for unlimited repeats
 timerlist.save Save timer
-timerlist.standby Action
+timerlist.standby SB mode
 timerlist.standby.off Leave standby
 timerlist.standby.on Enter standby
 timerlist.stoptime Stop time
@@ -2352,15 +2413,25 @@ unit.short.hour h
 unit.short.millisecond ms
 unit.short.minute min
 unit.short.second s
+upnpbrowser.current Currently Playing
+upnpbrowser.dir Directory
+upnpbrowser.duration Duration
 upnpbrowser.head UPnP Browser
+upnpbrowser.nores No resource for Item
 upnpbrowser.noservers No UPnP servers found
+upnpbrowser.proto Protocol
+upnpbrowser.res Resource
 upnpbrowser.rescan Scan again
 upnpbrowser.scanning Scanning for UPnP servers
+upnpbrowser.selected Selected
+upnpbrowser.type MIME-Type
+upnpbrowser.url URL
 usermenu.button_blue User menu blue
 usermenu.button_green User menu green
 usermenu.button_red User menu red
 usermenu.button_yellow User menu yellow
 usermenu.head User menu
+usermenu.item_adzap Adzap
 usermenu.item_bar ---- Border ----
 usermenu.item_epg_misc EPG functions
 usermenu.item_none (empty)

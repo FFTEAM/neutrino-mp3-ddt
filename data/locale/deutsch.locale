@@ -98,6 +98,14 @@ GENRE.TRAVEL_HOBBIES.6 Einkauf
 GENRE.TRAVEL_HOBBIES.7 Garten
 GENRE.UNKNOWN Unbekannt
 adzap Werbezapper
+adzap.announce In 15 Sekunden wird umgeschaltet auf
+adzap.cancel Deaktiviert
+adzap.disable Deaktivieren
+adzap.enable Einmalig aktivieren
+adzap.minute Minute
+adzap.minutes Minuten
+adzap.monitor Daueraktiv bei aktueller Sendung
+adzap.switchback Zurückschalten nach
 apidselector.head Sprachauswahl
 audio.srs_algo Art
 audio.srs_algo_heavy stark
@@ -183,6 +191,29 @@ audioplayer.shuffle Zufällig
 audioplayer.spectrum LCD Skala
 audioplayer.stop Stopp
 audioplayer.title_artist Titel, Interpret
+audioplayerpicsettings.general Audioplayer/Bildbetrachter/Movieplayer
+bluepanel.emu Cam Menue
+bluepanel.emu.none Nicht aktiv
+bluepanel.emu.mgcamd MGCamd
+bluepanel.emu.incubus IncubusCamd
+bluepanel.emu.camd3 Camd3
+bluepanel.emu.mbox Mbox
+bluepanel.emu.oscam Oscam
+bluepanel.emu.osemu Osemu
+bluepanel.emu.wicard Wicard
+bluepanel.emu.select Cam Auswahl
+bluepanel.emu.restart Cam neu starten
+bluepanel.emu.disable Cam deaktivieren
+bluepanel.swap Swap Menue
+bluepanel.swap.swapram SWAPRAM
+bluepanel.swap.swappart SWAPPART
+bluepanel.swap.swapfile SWAPFILE
+bluepanel.swap.select Swap Auswahl
+bluepanel.swap.onoff SWAP
+bluepanel.fritzcall Fritzcall Menue
+bluepanel.fritzcall.select Fritzcallmonitor
+bluepanel.fritzcall.on Ein
+bluepanel.fritzcall.off Aus
 bookmarkmanager.delete Löschen
 bookmarkmanager.name Bookmarks
 bookmarkmanager.rename Umbenennen
@@ -523,7 +554,7 @@ extra.tp_transmit_mode_c1 C1
 extra.tp_transmit_mode_c3780 C3780
 extra.update_dir Lokales Update-Verzeichnis
 extra.use_gotoxx Benutze gotoXX
-extra.volume_digits Lautstärkewert anzeigen
+extra.volume_digits Lautstärkeanzeige Ziffern anzeigen
 extra.volume_pos Lautstärkeanzeige
 extra.volume_size Höhe der Anzeige
 extra.west Westen
@@ -718,6 +749,7 @@ glcd.select.bar Fortschrittsbalken-Farbe
 glcd.select.bg Hintergrund-Farbe
 glcd.select.fg Vordergrund-Farbe
 glcd.show_logo Sender-Logo anzeigen
+glcd.show_numbers Kanalnummern anzeigen
 glcd.size_bar Fortschrittsbalken-Größe
 glcd.size_channel Sender-Größe
 glcd.size_epg EPG-Größe
@@ -734,7 +766,7 @@ hdd_5min 5 min.
 hdd_60min 60 min.
 hdd_activate Übernehmen
 hdd_check Dateisystemprüfung
-hdd_check_failed Datenträgerprüfung fehlgeschlagen
+hdd_check_failed Festplattenprüfung fehlgeschlagen
 hdd_check_format_bad Überprüfung von Datenträgern mit Format %s wird nicht unterstützt.
 hdd_extended_settings Erweiterte Festplatteneinstellungen
 hdd_fast Schnell
@@ -754,13 +786,13 @@ hdd_mount_failed Fehler! Überprüfen Sie ihre Laufwerkseinstellungen.
 hdd_mount_ok Laufwerk bereit
 hdd_mount_umount Laufwerke ein-/aushängen
 hdd_noise Akustikkontrolle (AAM)
-hdd_not_found Kein Datenträger
+hdd_not_found Keine Festplatte gefunden
 hdd_removable_device Wechseldatenträger
 hdd_set_recdir Diesen Datenträger für die Aufnahme nutzen?
 hdd_settings Laufwerke
 hdd_sleep Ausschalten nach...
 hdd_slow Langsam
-hdd_statfs Füllstandsabfrage
+hdd_statfs Füllstands-Abfrage
 hdd_statfs_always immer
 hdd_statfs_recording nur während Aufnahme
 hdd_umount aushängen
@@ -898,11 +930,12 @@ lua.function_deprecated1 Achtung!
 lua.function_deprecated2 Die Funktion
 lua.function_deprecated3 ist veraltet,\n                      bitte nutzen Sie
 mainmenu.audioplayer Audioplayer
+mainmenu.bluepanel FFTeam Bluepanel
 mainmenu.channels Kanalliste
 mainmenu.clearsectionsd Lösche EPG Cache
-mainmenu.games Spiele
+mainmenu.games Spiele >
 mainmenu.head Hauptmenü
-mainmenu.lua Lua-Plugins
+mainmenu.lua Lua-Plugins >
 mainmenu.media Multimedia
 mainmenu.movieplayer Movieplayer
 mainmenu.pausesectionsd EPG auslesen
@@ -912,21 +945,21 @@ mainmenu.reboot Neustart
 mainmenu.recording Aufnehmen
 mainmenu.recording_start Start
 mainmenu.recording_stop Stopp
-mainmenu.scripts Skripte
+mainmenu.scripts Skripte >
 mainmenu.service Service
 mainmenu.settings Einstellungen
 mainmenu.shutdown Ausschalten
-mainmenu.shutdown_menu Ausschalt-Optionen
+mainmenu.shutdown_menu Ausschalt Optionen
 mainmenu.sleeptimer SleepTimer
 mainmenu.standby Standby
-mainmenu.tools Werkzeuge
+mainmenu.tools Tools-Plugins >
 mainmenu.tvmode TV-Modus
 mainmenu.tvradio_switch TV-Radio Umschaltung
 mainsettings.audio Audio
 mainsettings.head Einstellungen
 mainsettings.keybinding Tasten
 mainsettings.language Sprache
-mainsettings.lcd Front-Panel
+mainsettings.lcd VFD/LED/LCD-Display
 mainsettings.manage Einstellungen verwalten
 mainsettings.misc Erweiterte Einstellungen
 mainsettings.multimedia Multimedia
@@ -941,6 +974,7 @@ menu.back Zurück
 menu.cancel Abbrechen
 menu.hint_a_pic Konfigurieren Sie den Audioplayer, den Bildbetrachter, den Movieplayer und mehr
 menu.hint_accept_other_remotes Deaktivieren um andere Fernbedienungen zu ignorieren
+menu.hint_adzap Der Werbe-Zapper schaltet nach der eingestellten Zeit wieder auf den ursprünglichen Kanal zurück
 menu.hint_aplay Audioplayer
 menu.hint_aplay_setup Ändern Sie Audioplayer-Einstellungen wie Titel-Anzeige, Startverzeichnis oder Bildschirmschoner.
 menu.hint_audio Audio-Ausgang, Dolby Digital und SRS TruVolume Optionen und mehr
@@ -973,6 +1007,8 @@ menu.hint_back_brief Zurück zum vorherigen Menü.
 menu.hint_backlight Konfigurieren Sie die Hintergrundbeleuchtung der Buttons
 menu.hint_backup Sichern von Konfigurationen und Kanallisten
 menu.hint_bedit Bearbeiten ihrer Favoriten und der Bouquets
+menu.hint_bluepanel FFTeam Bluepanel
+menu.hint_boot_spark Booten Sie SPARK nur, wenn Sie wissen, wie Sie zu Neutrino zurückkommen.
 menu.hint_buildinfo Informationen über Compiler, Compilerflags, Kernel
 menu.hint_cache_txt Startet das Zwischenspeichern des Teletextes nach einem Kanalwechsel
 menu.hint_cec_mode CEC-Modus
@@ -1015,7 +1051,7 @@ menu.hint_epg_fonts Ändern Sie die Schriftgrößen der EPG-Details
 menu.hint_epg_max_events Maxiale Anzahl der Events im Zwischenspeicher
 menu.hint_epg_old_events Veraltete EPG-Daten werden nach dieser Zeit (in Stunden) verworfen
 menu.hint_epg_read Liest nach einem Neustart die EPG-Daten von einem externen Datenträger wieder ein
-menu.hint_epg_save Speichert die EPG-Daten beim Herunterfahren auf einem externen Datenträger
+menu.hint_epg_save Speichert die EPG-Daten beim Herunterfahren auf einem externen Datenträger und läd es von dort nach einen Neustart
 menu.hint_epg_save_frequently Speichert die EPG-Daten in regelmäßigen Abständen auf einem externen Datenträger
 menu.hint_epg_save_mode Speichert die EPG-Daten nur für Sender, die in die Favoriten aufgenommen sind
 menu.hint_epg_save_standby Speichert die EPG-Daten auch, wenn in den Standby-Modus geschalten wird
@@ -1144,13 +1180,13 @@ menu.hint_leds_standby Definiert den Status der Power-LEDs im Standby
 menu.hint_leds_tv Definiert den Status der Power-LEDs im TV-Modus
 menu.hint_load Laden der Neutrino Einstellungen aus einer Datei
 menu.hint_longkeypress_duration Tasten, die länger als die angegebene Zeit betätigt werden, werden als "langer Tastendruck" behandelt.
-menu.hint_lua Plugins ausführen
+menu.hint_lua Zeige Liste der installierten Lua Plugins
 menu.hint_make_hdlist Bei aktiver Option wird ein Bouquet namens 'HD' erzeugt, in dem alle HD-Sender zusammengefasst sind
 menu.hint_make_newlist Nach einer Kanalsuche wird ein Bouquet namens 'neue Kanäle' erzeugt
 menu.hint_make_removedlist Nach einer Kanalsuche wird ein Bouquet namens 'gelöschte Kanäle' erzeugt
 menu.hint_make_webtvlist Bei aktiver Option wird ein Bouquet namens 'WebTV' erzeugt, in dem alle WebTV-Sender zusammengefasst sind
 menu.hint_manage_settings Sichern, Wiederherstellen und Auslieferungszustand wiederherstellen
-menu.hint_mb Hier spielen Sie Ihre Aufnahmen und andere vorhandene Filme ab.
+menu.hint_mb Hier spielen Sie ihre Aufnahmen und andere vorhandene Filme ab.
 menu.hint_media Abspielen von Musik, Internetradio und Filmen; Betrachten Sie Bilder
 menu.hint_menu_fonts Ändern Sie die Schriftgrößen im Menü
 menu.hint_menu_hints Zeigt Ihnen Hinweise zu den Menüpunkten an. Sie erreichen das auch jederzeit mit der Taste 'Hilfe'
@@ -1205,6 +1241,8 @@ menu.hint_network IP-Adresse, Gateway, DNS, Zeit-Sync, Netzwerk-Freigaben, Diens
 menu.hint_new_zap_mode Aktiviert Quickzap in der Kanalliste. Nach Betätigen der Mute-Taste wird mit den Hoch/Runter-Tasten direkt umgeschalten
 menu.hint_next Weiter zum nächsten Menü.\nDie Taste 'Menü' schließt alle Menüs
 menu.hint_next_brief Weiter zum nächsten Menü
+menu.hint_nkplay Wiedergabe von netzkino.de-Filmen
+menu.hint_nkplayback_setup Konfigurieren Sie Netzkino-spezifische Optionen wie maximale Ergebnisse bei Suchen oder Cache-Verzeichnis
 menu.hint_numeric_adjust Bei numerischer Programmwahl die Kanalliste am neu gewählten Programm ausrichten
 menu.hint_opkg Hier können Sie neue Software-Pakete installieren oder vorhandene aktualisieren
 menu.hint_opkg_upgrade Aktualisiert alle installierten Pakete auf die neueste verfügbare Version
@@ -1212,7 +1250,7 @@ menu.hint_osd Farben, Schriftarten, Anzeigegröße, Ansichtsoptionen der Menüs 
 menu.hint_osd_language Wählen Sie ihre Menü-Sprache
 menu.hint_osd_preset Wählen Sie zwischen Röhren-TV (CRT) oder Flachbildschirm (LCD)
 menu.hint_osd_timing Einblendzeit, die das OSD auf dem TV angezeigt wird
-menu.hint_other_fonts Ändern anderer Schriftgrößen
+menu.hint_other_fonts Ändern Sie andere Schriftgrößen
 menu.hint_parentallock_changepin Geben Sie den 4-stelligen PIN-Code ein, der dann ggf. abgefragt wird
 menu.hint_parentallock_lockage Legen Sie fest, bei welcher Altersklasse die Abfrage der PIN erfolgt
 menu.hint_parentallock_menu Menüs mit PIN Code sichern
@@ -1276,6 +1314,7 @@ menu.hint_recording Aufnahme-, Timeshift- und Timer-Optionen, Einstellung von au
 menu.hint_reload_channels Kanallisten neu laden, um Änderungen wirksam zu machen
 menu.hint_reload_plugins Plugins neu laden, um Änderungen wirksam zu machen
 menu.hint_reset Zurücksetzen von Neutrino-Einstellungen auf Standardwerte. Tuner-Einstellungen und Kanäle bleiben erhalten
+menu.hint_restart_cam Starten Sie Ihr Conditional Access Module neu
 menu.hint_restart_tuner Führen Sie einen Neustart des internen Tuners durch. Das kann Empfangsprobleme beheben.
 menu.hint_restore Wiederherstellen von vorher erstellten Sicherungen
 menu.hint_rotor_swap Tauschen der Rotordrehrichtung Ost/West in den Motor-Einstellungen
@@ -1306,7 +1345,7 @@ menu.hint_scan_felink Select tuner to link tuner to
 menu.hint_scan_femode Wählen Sie den Verbindungstyp für den zweiten Tuner
 menu.hint_scan_feretries Wiederholungen bei fehlgeschlagenem Tuning
 menu.hint_scan_fesetup Konfigurieren des oder der Tuner
-menu.hint_scan_fetimeout Wartezeit auf das Signal
+menu.hint_scan_fetimeout Maximale Wartezeit auf das Signal in 1/10 Sekunden
 menu.hint_scan_freq Geben Sie eine Transponder-Frequenz ein
 menu.hint_scan_fta Lassen Sie nur frei empfangbare (nicht-verschlüsselte) Programme suchen
 menu.hint_scan_gi Wählen Sie den Schutzintervall für diesen terrestrischen Kanal
@@ -1369,7 +1408,7 @@ menu.hint_screenshot_res Screenshot Größe: aktuelle TV-Auflösung oder OSD-Auf
 menu.hint_screenshot_scale Skalierung auf TV-Auflösung, wenn OSD aktiviert ist
 menu.hint_screenshot_setup Konfigurieren Sie die Optionen zum Erstellen von Screenshots
 menu.hint_screenshot_video Diese Funktion übernimmt das TV-Bild als Hintergrund in den Screenshot
-menu.hint_scripts Shell-Skripte ausführen
+menu.hint_scripts Zeige Liste der installierten Skripte
 menu.hint_selected_back Ändern Sie die Hintergrundfarbe für ausgewählte Fensterinhalte
 menu.hint_selected_text Ändern Sie die Textfarbe für ausgewählte Fensterinhalte
 menu.hint_service Sendersuchlauf, Bouquet-Verwaltung, Software-Aktualisierung und mehr
@@ -1381,7 +1420,7 @@ menu.hint_shutdown_count Die Zeit zum Herunterfahren in den Deep-Standby, wenn d
 menu.hint_shutdown_menu Versetzen des Receivers in den Standby Modus, ausschalten des Receivers, setzen des Sleep Timers
 menu.hint_shutdown_rcdelay Aktiviert den Deep-Standby, wenn die Power-Taste länger als 1 Sekunde betätigt wird
 menu.hint_shutdown_real Aktiviert den Standby-Modus. Ist diese Option deaktiviert, fährt die Box in den Deep-Standby
-menu.hint_sleeptimer Zeitschaltuhr auf Ihrer Box aktivieren\nDie Box fährt dann in den Standby-Modus
+menu.hint_sleeptimer Zeitschaltuhr auf Ihrer Box aktivieren.\nDie Box fährt dann in den Standby-Modus
 menu.hint_sleeptimer_min Voreinstellung der Zeitschaltuhr auf Ihrer Box
 menu.hint_soft_restart Neustarten von Neutrino, ohne die Box neu zu starten
 menu.hint_softupdate_check Im Internet nach verfügbaren Updates suchen, herunterladen und installieren
@@ -1400,7 +1439,7 @@ menu.hint_theme Wählen Sie ein vordefiniertes Farbschema, speichern oder laden 
 menu.hint_timeouts Gibt an, nach welcher Zeit in Sekunden die Menüs oder Infofenster sich automatisch schließen (0 deaktiviert)
 menu.hint_timers Hinzufügen, entfernen und bearbeiten geplanter Aufnahmen oder anderer Timer
 menu.hint_timezone Wählen Sie ihre Zeitzone aus
-menu.hint_tools Werkzeuge ausführen
+menu.hint_tools Zeige Liste der installierten Tools-Plugins
 menu.hint_tvmode Schaltet zum TV-Modus
 menu.hint_tvradio_switch Schaltet zwischen TV- und Radio-Modus um
 menu.hint_upnp Zugriff auf UPNP-Server in Ihrem lokalen Netz
@@ -1491,7 +1530,7 @@ miscsettings.epg_scan_always Immer
 miscsettings.epg_scan_bouquets Zu scannende Bouquets
 miscsettings.epg_scan_bq Aktuelles Bouquet
 miscsettings.epg_scan_fav Alle Favoriten
-miscsettings.epg_scan_live Bei eingeschaltener Box
+miscsettings.epg_scan_live Bei eingeschalteter Box
 miscsettings.epg_scan_sel Markierte Bouquets
 miscsettings.epg_scan_standby Im Standby Modus
 miscsettings.general Allgemein
@@ -1524,9 +1563,9 @@ miscsettings.infoclock Uhr
 miscsettings.progressbar Fortschrittsbalken
 miscsettings.progressbar_color Farbe
 miscsettings.progressbar_design Design
-miscsettings.progressbar_design_0 Punkte
-miscsettings.progressbar_design_1 vertikale Balken
-miscsettings.progressbar_design_2 horizontale Balken
+miscsettings.progressbar_design_0 farbige Punkte
+miscsettings.progressbar_design_1 farbige vertikale Linien
+miscsettings.progressbar_design_2 farbige horizontale Linien
 miscsettings.progressbar_design_3 Farbverlauf
 miscsettings.progressbar_design_4 monochrom
 miscsettings.progressbar_design_long Design
@@ -1545,6 +1584,7 @@ miscsettings.progressbar_timescale_red Rot
 miscsettings.progressbar_timescale_red_green von Rot nach Grün
 miscsettings.progressbar_timescale_yellow Gelb
 miscsettings.radiotext Radiotext
+miscsettings.restart Die Änderung wird bei Neustart aktiv.
 miscsettings.shutdown_count Komplett ausschalten nach
 miscsettings.shutdown_count_hint1 Zeit (in Minuten), nach der vom Standby in
 miscsettings.shutdown_count_hint2 den Deep-Standby geschalten wird (0 = aus)
@@ -1594,7 +1634,7 @@ moviebrowser.ask_rec_to_delete Das Löschen des Films beendet auch die laufende 
 moviebrowser.book_add Lesezeichen setzen
 moviebrowser.book_clear_all Lösche alle
 moviebrowser.book_head Markierungen
-moviebrowser.book_lastmoviestop letzter Wiedergabestopp:
+moviebrowser.book_lastmoviestop von zuletzt gesehener Position:
 moviebrowser.book_movieend Filmende:
 moviebrowser.book_moviestart Filmstart:
 moviebrowser.book_name Name:
@@ -1636,7 +1676,7 @@ moviebrowser.foot_options Optionen
 moviebrowser.foot_play Film starten
 moviebrowser.foot_refresh Liste neu laden
 moviebrowser.foot_sort Sortieren:
-moviebrowser.head Movie-Browser
+moviebrowser.head Movie-Browser Meine Aufnahmen
 moviebrowser.head_filter Filme nach Kategorie filtern:
 moviebrowser.head_playlist Zuletzt gesehen:
 moviebrowser.head_recordlist Zuletzt aufgenommen:
@@ -1699,7 +1739,11 @@ moviebrowser.menu_parental_lock_rate_head Filme sperren ab
 moviebrowser.menu_save Veränderungen speichern
 moviebrowser.menu_save_all Starte Übernahme in allen sichtbaren Filminfos
 moviebrowser.menu_truncate Film kürzen
+moviebrowser.nk_categories Kategorie-Auswahl
+moviebrowser.nk_error Fehler beim Laden des Netzkino-Feeds
+moviebrowser.nk_protocol Protokoll
 moviebrowser.option_browser Anzeigeoptionen
+moviebrowser.program_selection Programm
 moviebrowser.reload_at_start Filminfos neu laden bei Start
 moviebrowser.remount_at_start Filmdepot verbinden bei Start
 moviebrowser.scan_for_movies Suche Filme ...
@@ -1727,12 +1771,13 @@ moviebrowser.short_serie Serie
 moviebrowser.short_size Größe
 moviebrowser.short_title Titel
 moviebrowser.start_head Film starten von Position:
-moviebrowser.start_record_start Aufnahmestart
+moviebrowser.start_record_start von Anfang an abspielen 
 moviebrowser.truncate Film kürzen?
 moviebrowser.truncate_failed Fehler beim Kürzen des Films
 moviebrowser.truncate_failed_playing Kürzen des Films während der Wiedergabe nicht möglich.
 moviebrowser.truncating Kürze Film, bitte warten ...
 moviebrowser.ts_only Nur Aufnahmen zeigen
+moviebrowser.unlimited unbegrenzt
 moviebrowser.update_if_dest_empty_only Übernehmen nur wenn Ziel leer
 moviebrowser.use_dir Verzeichnis verwenden
 moviebrowser.use_movie_dir Wiedergabeverzeichnis verwenden
@@ -1741,6 +1786,7 @@ moviebrowser.yt_cache Downloads
 moviebrowser.yt_cache_add Download von\n%s\nwird eingeplant.
 moviebrowser.yt_cancel Alle abbrechen
 moviebrowser.yt_cancel_transfer Download abbrechen?
+moviebrowser.yt_charts Charts
 moviebrowser.yt_clear Liste leeren
 moviebrowser.yt_completed Vollständige Downloads
 moviebrowser.yt_concurrent_connections Gleichzeitige Verbindungen
@@ -1771,9 +1817,11 @@ movieplayer.bookmarkname_hint1 Geben Sie den Namen für das neue Lesezeichen ein
 movieplayer.bookmarkname_hint2 
 movieplayer.chapters Kapitel
 movieplayer.defplugin Start-Plugin
-movieplayer.fileplayback Datei-Browser
+movieplayer.fileplayback Datei-Browser Abspielen (Multiformat)
 movieplayer.head Movieplayer
+movieplayer.nkplayback Netzkino
 movieplayer.starting Wiedergabe starten...
+movieplayer.stopping Wiedergabe wird beendet...
 movieplayer.titles Titel
 movieplayer.toomanybookmarks Sie haben bereits zu viele Lesezeichen angelegt.\nEs muß erst ein anderes gelöscht werden.
 movieplayer.tshelp1 Stopp
@@ -1788,8 +1836,8 @@ movieplayer.tshelp6 ca. 1 Minute zurück
 movieplayer.tshelp7 ca. 1 Minute vor
 movieplayer.tshelp8 ca. 5 Minuten zurück
 movieplayer.tshelp9 ca. 5 Minuten vor
-movieplayer.tsplayback Abspielen
-movieplayer.ytplayback Youtube
+movieplayer.tsplayback TS Abspielen
+movieplayer.ytplayback Youtube-Feed Wiedergabe
 mpkey.audio Audiotrack
 mpkey.bookmark Speichere Lesezeichen
 mpkey.forward Vorlauf
@@ -1837,7 +1885,7 @@ networkmenu.ssid_scan WLAN-Netzwerke suchen
 networkmenu.ssid_scan_error Keine WLAN-Netzwerke gefunden.
 networkmenu.ssid_scan_wait WLAN-Netzwerke werden gesucht...
 networkmenu.test Netzwerk testen
-neutrino_starting Neutrino wird gestartet...
+neutrino_starting FFTEAM-Neutrino wird gestartet...
 nfs.alreadymounted Verzeichnis bereits gemountet.
 nfs.automount Beim Start mounten
 nfs.dir Verzeichnis/Freigabe
@@ -1866,6 +1914,8 @@ nvod.starting (Beginn in %d min)
 nvodselector.directormode Bildregie-Modus
 nvodselector.head Anfangszeit auswählen
 nvodselector.subservice Perspektiven
+onoff.on Ein
+onoff.off Aus
 opkg.button.expert_off Standard-Modus
 opkg.button.expert_on Experten-Modus
 opkg.button.info Paket-Informationen
@@ -1990,7 +2040,9 @@ plugintype.disabled Deaktiviert
 plugintype.game Spiel
 plugintype.lua Lua-Plugin
 plugintype.script Skript
-plugintype.tool Werkzeug
+plugintype.tool Tool-Werkzeug
+protocol.f4v F4V
+protocol.http HTTP
 rass.head Radio Screen Show
 rclock.lockmsg Die Fernbedienung wird gesperrt.\n Um die Sperre aufzuheben, bitte\n <ROT> und <MENU> auf der Fernbedienung\n drücken.
 rclock.menueadd FB sperren
@@ -2065,7 +2117,7 @@ satsetup.fastscan_all SD und HD
 satsetup.fastscan_auto_diseqc Start automatische Diseqc Konfiguration
 satsetup.fastscan_auto_diseqc_wait Automatische Diseqc Konfiguration wird durchgeführt
 satsetup.fastscan_hd nur HD
-satsetup.fastscan_head Schnellscan
+satsetup.fastscan_head Schnellscan (Astra 1, 19.2 E, 12.515 Mhz)
 satsetup.fastscan_prov Anbieter:
 satsetup.fastscan_prov_cd_hd CanalDigitaal (HD)
 satsetup.fastscan_prov_cd_sd CanalDigitaal (SD)
@@ -2161,9 +2213,9 @@ screensaver.dir Verzeichnis
 screensaver.menu Bildschirmschoner
 screensaver.off Bildschirmschoner aus
 screensaver.timeout Bilderwechsel
-screensetup.lowerright grün = Bildrand unten, rechts
+screensetup.lowerright Grün = Bildrand unten, rechts
 screensetup.remove Maske entfernen
-screensetup.upperleft rot = Bildrand oben, links
+screensetup.upperleft Rot = Bildrand oben, links
 screenshot.backbuffer Sekundärer Buffer (Back Buffer)
 screenshot.count Anzahl
 screenshot.cover Erzeuge Filmcover für Moviebrowser
@@ -2181,8 +2233,13 @@ screenshot.please_wait_cover Erzeuge Video-Cover, bitte warten ...
 screenshot.png_compression PNG-Komprimierungsstärke
 screenshot.res Auflösung
 screenshot.scale Skalierung
-screenshot.tv Video
+screenshot.tv TV-Auflösung
 screenshot.video Video im Hintergrund
+screenshot.web yWeb
+servicemenu.boot_params_ask Soll wirklich SPARK gebootet werden?
+servicemenu.boot_params_head Änderung der Boot-Parameter
+servicemenu.boot_params_hint Bitte den Receiver nicht ausschalten!
+servicemenu.boot_spark Jetzt SPARK booten
 servicemenu.getplugins Plugins neu laden
 servicemenu.getplugins_hint Plugins werden neu geladen,\nbitte warten...
 servicemenu.head Service
@@ -2190,9 +2247,11 @@ servicemenu.imageinfo Imageinfo
 servicemenu.reload Kanallisten neu laden
 servicemenu.reload_hint Kanallisten werden neu geladen,\nbitte warten...
 servicemenu.restart Neutrino neu starten
+servicemenu.restart_cam CAM neu starten
 servicemenu.restart_hint Neutrino wird neu gestartet...
 servicemenu.restart_refused_recording Aufnahme läuft. Neustart nicht möglich.
 servicemenu.restart_tuner Tuner neu starten
+servicemenu.restarting_cam CAM wird neu gestartet
 servicemenu.restarting_tuner Tuner wird neu gestartet
 servicemenu.scants Kanalsuche
 servicemenu.update Software-Aktualisierung
@@ -2209,6 +2268,7 @@ settings.pos_bottom_left unten links
 settings.pos_bottom_right unten rechts
 settings.pos_default_center zentriert
 settings.pos_higher_center höher zentriert
+settings.pos_off aus
 settings.pos_top_center oben zentriert
 settings.pos_top_left oben links
 settings.pos_top_right oben rechts
@@ -2235,15 +2295,17 @@ streaminfo.head Technische Informationen
 streaminfo.not_available nicht verfügbar
 streaminfo.resolution Auflösung
 streaminfo.signal Empfangssignal
+streaminfo.url URL
 streaming.busy Ein oder mehrere Aufnahmeprozesse sind aktiv.\nSollte die Aufnahme eigentlich beendet sein,\nschafft ein Neustart von Neutrino Abhilfe.
 streaming.dir_not_writable Das Aufnahmeverzeichnis ist nicht beschreibbar.\nAufnahmen sind daher nicht möglich.
 streaming.overflow Aufnahme-Puffer Überlauf! Bitte ggf. einige Aufnahmen beenden.
 streaming.slow System oder Datenträger zu langsam! Bitte ggf. einige Aufnahmen beenden.
 streaming.write_error Die Aufnahme wurde leider abgebrochen,\nda ein Fehler beim Schreiben der Daten auftrat.
-stringinput.backspace Rücklöschen
-stringinput.caps Groß / Klein
+stringinput.backspace Zurück
+stringinput.caps Groß-/Kleinbuchstaben
 stringinput.clear Alles löschen
 stringinput.insert Einfügen
+stringinput.layout Belegung
 stringinput.save Speichern
 subtitles.charset Zeichensatz
 subtitles.head Untertitel
@@ -2306,7 +2368,7 @@ timerlist.repeatcount Wiederholungen
 timerlist.repeatcount.help1 Anzahl der Timerausführungen
 timerlist.repeatcount.help2 0 für unbegrenzte Anzahl
 timerlist.save Timer speichern
-timerlist.standby Aktion
+timerlist.standby SB Modus
 timerlist.standby.off Aufwachen aus Standby
 timerlist.standby.on In Standby gehen
 timerlist.stoptime Stoppzeit
@@ -2350,15 +2412,25 @@ unit.short.hour h
 unit.short.millisecond ms
 unit.short.minute min
 unit.short.second s
+upnpbrowser.current derzeit
+upnpbrowser.dir Verzeichnis
+upnpbrowser.duration Länge
 upnpbrowser.head UPnP Browser
+upnpbrowser.nores keine Ressource
 upnpbrowser.noservers Kein UPnP-Server gefunden
+upnpbrowser.proto Protokoll
+upnpbrowser.res Ressource
 upnpbrowser.rescan Neue Suche
 upnpbrowser.scanning Suche nach UPnP-Servern
+upnpbrowser.selected Ausgewählte
+upnpbrowser.type MIME-Typ
+upnpbrowser.url URL
 usermenu.button_blue Benutzermenü 'blau'
 usermenu.button_green Benutzermenü 'grün'
 usermenu.button_red Benutzermenü 'rot'
 usermenu.button_yellow Benutzermenü 'gelb'
 usermenu.head Benutzermenü
+usermenu.item_adzap Werbezapper
 usermenu.item_bar ---- Trennung ----
 usermenu.item_epg_misc EPG Funktionen
 usermenu.item_none (frei)
