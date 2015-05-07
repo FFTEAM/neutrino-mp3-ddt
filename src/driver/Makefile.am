@@ -48,6 +48,12 @@ if ENABLE_GRAPHLCD
 libneutrino_driver_a_SOURCES += \
 	nglcd.cpp
 endif
+
+if ENABLE_SHAIRPLAY
+libneutrino_driver_a_SOURCES += \
+	shairplay.cpp
+endif
+
 if BOXTYPE_DUCKBOX
 libneutrino_driver_a_SOURCES += \
 	vfd.cpp
