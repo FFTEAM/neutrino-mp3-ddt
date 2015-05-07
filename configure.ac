@@ -27,6 +27,13 @@ AH_TEMPLATE(USED_COMPILER, [Define to name and version of used compiler])
 if COMPILER=`$CC --version | head -n 1`; then
     AC_DEFINE_UNQUOTED(USED_COMPILER, ["$COMPILER"])
 fi
+# only update header if it differs to avoid unnecessary rebuilds
+if ! diff local_build_config.h.tmp local_build_config.h >/dev/null 2>&1; then
+	rm -f local_build_config.h
+	mv local_build_config.h.tmp local_build_config.h
+else
+	rm -f local_build_config.h.tmp
+fi
 
 AC_ARG_ENABLE(ffmpegdec,
 	AS_HELP_STRING(--enable-ffmpegdec,include ffmpeg decoder support),
@@ -133,9 +140,11 @@ AC_ARG_ENABLE(mdev,
 	[  --enable-mdev disable broken neutrino mount hack, use with mdev],
 	[AC_DEFINE(ASSUME_MDEV,1,[disable broken neutrino mount hack, use with mdev])])
 
-AC_ARG_ENABLE(freesatepg,
-	[  --enable-freesatepg                  enable Freesat EPG code (experimental)],
-	[AC_DEFINE(ENABLE_FREESATEPG,1,[enable Freesat EPG code])])
+AC_DEFINE(ENABLE_FREESATEPG,1,[enable Freesat EPG code])
+AM_CONDITIONAL(ENABLE_FREESATEPG, test "$ENABLE_FREESATEPG")
+
+AC_DEFINE(ENABLE_VIASATEPG,1,[enable Viasat EPG code])
+AM_CONDITIONAL(ENABLE_VIASATEPG, test "$ENABLE_VIASATEPG")
 
 AC_ARG_ENABLE(fastscan,
 	AS_HELP_STRING(--enable-fastscan,include FASTSCAN support),
@@ -153,6 +162,15 @@ AC_ARG_ENABLE(graphlcd,
 AM_CONDITIONAL(ENABLE_GRAPHLCD,test "$enable_graphlcd" = "yes")
 if test "$enable_graphlcd" = "yes"; then
 	AC_DEFINE(ENABLE_GRAPHLCD,1,[include GraphLCD support])
+fi
+
+AC_ARG_ENABLE(shairplay,
+	[  --enable-shairplay                    enable ShairPlay support],
+	[AC_DEFINE(ENABLE_SHAIRPLAY,1,[enable ShairPlay support])])
+
+AM_CONDITIONAL(ENABLE_SHAIRPLAY,test "$enable_shairplay" = "yes")
+if test "$enable_shairplay" = "yes"; then
+	AC_DEFINE(ENABLE_SHAIRPLAY,1,[include ShairPlay support])
 fi
 
 AC_ARG_ENABLE(giflib,
@@ -308,6 +326,7 @@ lib/libtuxtxt/Makefile
 lib/libdvbsub/Makefile
 lib/libupnpclient/Makefile
 lib/libiw/Makefile
+lib/jsoncpp/Makefile
 lib/luaclient/Makefile
 src/lcddisplay/Makefile
 src/nhttpd/Makefile
@@ -334,6 +353,7 @@ src/system/mtdutils/Makefile
 src/system/mtdutils/lib/Makefile
 data/Makefile
 data/fonts/Makefile
+data/freesatepg/Makefile
 data/icons/Makefile
 data/inetradio/Makefile
 data/initial/Makefile
