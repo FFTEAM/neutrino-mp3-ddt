@@ -718,7 +718,7 @@ int CMsgBox::exec( int timeout, int returnDefaultOnTimeout)
 
 			refreshFoot();
 		}
-		else if(msg == CRCInput::RC_ok)
+		else if(msg == CRCInput::RC_ok || msg == CRCInput::RC_info)
 		{
 			loop = false;
 		}
