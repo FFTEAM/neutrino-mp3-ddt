@@ -31,7 +31,9 @@
 #include <stdio.h>    /* printf       */
 #include <sys/time.h> /* gettimeofday */
 #include <driver/framebuffer.h>
-#include <pthread.h>
+#include <OpenThreads/Mutex>
+#include <map>
+
 class CPictureViewer
 {
 	struct cformathandler 
@@ -42,6 +44,28 @@ class CPictureViewer
 		int (*id_pic)(const char *);
 	};
 	typedef  struct cformathandler CFormathandler;
+
+	class cached_pic_key
+	{
+		public:
+			std::string name;
+			int height, width, transp;
+			bool operator()(cached_pic_key a, cached_pic_key b) const
+			{
+				return ( (a.height < b.height)
+				     || ((a.height == b.height) && (a.width < b.width))
+				     || ((a.height == b.height) && (a.width == b.width) && (a.transp < b.transp))
+				     || ((a.height == b.height) && (a.width == b.width) && (a.transp == b.transp) && (a.name < b.name)));
+			}
+	};
+	struct cached_pic_data
+	{
+		time_t last_used;
+		fb_pixel_t *data;
+	};
+	int pic_cache_size;
+	int pic_cache_maxsize;
+	std::map<cached_pic_key,cached_pic_data,cached_pic_key> pic_cache;
 
  public:
 	enum ScalingMode
@@ -67,7 +91,7 @@ class CPictureViewer
 	static double m_aspect_ratio_correction;
 	bool DisplayImage (const std::string & name, int posx, int posy, int width, int height, int transp=CFrameBuffer::TM_EMPTY);
 // 	bool DisplayLogo (uint64_t channel_id, int posx, int posy, int width, int height);
-	bool GetLogoName(const uint64_t& channel_id, const std::string& ChanName, std::string & name, int *width = NULL, int *height = NULL);
+	virtual bool GetLogoName(const uint64_t& channel_id, const std::string& ChanName, std::string & name, int *width = NULL, int *height = NULL);
 	fb_pixel_t * getImage (const std::string & name, int width, int height);
 	fb_pixel_t * getIcon (const std::string & name, int *width, int *height);
 	void getSize(const char *name, int* width, int *height);
@@ -75,6 +99,7 @@ class CPictureViewer
 	unsigned char * ResizeA(unsigned char *orgin, int ox, int oy, int dx, int dy);
 	void rescaleImageDimensions(int *width, int *height, const int max_width, const int max_height, bool upscale=false);
 	void getSupportedImageFormats(std::vector<std::string>& erw);
+	void cacheSetSize(size_t max);
 
  private:
 	CFormathandler *fh_root;
@@ -109,19 +134,24 @@ class CPictureViewer
 	int m_endy;
 	
 	std::string logo_hdd_dir;
+	bool logo_rename_to_channelname;
 	struct logo_data {
 		std::string name;
 		int width;
 		int height;
 	};
 	std::map<uint64_t, logo_data> logo_map;
-	pthread_mutex_t logo_map_mutex;
-
+	OpenThreads::Mutex logo_map_mutex;
 	CFormathandler * fh_getsize(const char *name,int *x,int *y, int width_wanted, int height_wanted);
 	void init_handlers(void);
 	void add_format(int (*picsize)(const char *,int *,int*,int,int),int (*picread)(const char *,unsigned char **,int*,int*), int (*id)(const char*));
 	unsigned char * int_Resize(unsigned char *orgin, int ox, int oy, int dx, int dy, ScalingMode type, unsigned char * dst, bool alpha);
 	fb_pixel_t * int_getImage(const std::string & name, int *width, int *height, bool GetImage);
+
+	fb_pixel_t *cacheGet(const std::string &name, int width, int height, int transp);
+	void cachePut(const std::string &name, int width, int height, int transp, fb_pixel_t *data);
+	void cacheClear(void);
+	void cacheClearLRU(void);
 };
 
 
