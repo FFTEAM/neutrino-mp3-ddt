@@ -77,7 +77,6 @@ class CInfoViewer
 	int            ChanNameX;
 	int            ChanNameY;
 	int            ChanWidth;
-	int            ChanHeight;
 
 	CSectionsdClient::CurrentNextInfo info_CurrentNext;
 	CSectionsdClient::CurrentNextInfo oldinfo;
@@ -113,6 +112,7 @@ class CInfoViewer
 			  const char *runningStart = NULL, const char *runningRest = NULL,
 			  const char *nextStart = NULL, const char *nextDuration = NULL,
 			  bool update_current = true, bool update_next = true);
+	void paintTime( bool show_dot );
 	void initClock();
 	void showRecordIcon(const bool show);
 	void showIcon_Tuner() const;
@@ -146,6 +146,7 @@ class CInfoViewer
 
 	int	BoxStartX;
 	int	BoxStartY;
+	int            ChanHeight;
 	int      BoxEndX;
 	int      BoxEndY;
 	int      ChanInfoX;
@@ -158,6 +159,11 @@ class CInfoViewer
 	void	showMovieTitle(const int playState, const t_channel_id &channel_id, const std::string &title,
 				const std::string &g_file_epg, const std::string &g_file_epg1,
 				const int duration, const int curr_pos, const int repeat_mode);
+#if ENABLE_SHAIRPLAY
+	void showShairPlay(const std::string &album, const std::string &artist, const std::string &title,
+			   const std::string &comment, const std::string &composer, const std::string &genre,
+			   const std::string &decription, const std::string &year, bool dot);
+#endif
 
 	void	start();
 	void	showEpgInfo();

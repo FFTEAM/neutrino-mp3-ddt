@@ -32,6 +32,11 @@
 #define NEUTRINO_ICON_BUTTON_RED	"rot"
 #define NEUTRINO_ICON_BUTTON_YELLOW	"gelb"
 
+#define NEUTRINO_ICON_INFO_BLUE		"info_blue"
+#define NEUTRINO_ICON_INFO_GREEN	"info_green"
+#define NEUTRINO_ICON_INFO_RED		"info_red"
+#define NEUTRINO_ICON_INFO_YELLOW	"info_yellow"
+
 #define NEUTRINO_ICON_BUTTON_MENU	"menu"
 #define NEUTRINO_ICON_BUTTON_MENU_SMALL	"menu_small"
 #define NEUTRINO_ICON_BUTTON_HELP	"help"
@@ -131,6 +136,8 @@
 #define NEUTRINO_ICON_TUNER_3		"tuner_3"
 #define NEUTRINO_ICON_TUNER_4		"tuner_4"
 #define NEUTRINO_ICON_UPDATE		"softupdate"
+#define NEUTRINO_ICON_UPDATE_AVAIL		"update_avail"
+#define NEUTRINO_ICON_UPDATE_AVAIL_GREY		"update_avail_gray"
 #define NEUTRINO_ICON_UPNP		"upnp"
 #define NEUTRINO_ICON_VIDEO		"video"
 #define NEUTRINO_ICON_VOLUMEBODY	"volumebody"
