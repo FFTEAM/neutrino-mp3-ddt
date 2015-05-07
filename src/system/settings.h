@@ -279,6 +279,14 @@ struct SNeutrinoSettings
 
 	int epg_enable_freesat;
 	int epg_enable_viasat;
+#if ENABLE_SHAIRPLAY
+	int shairplay_enabled;
+	int shairplay_port;
+	int shairplay_bufsize;
+	std::string shairplay_apname;
+	std::string shairplay_password;
+#endif
+
 	//network
 	std::string network_ntpserver;
 	std::string network_ntprefresh;
@@ -484,6 +492,7 @@ struct SNeutrinoSettings
 	std::string plugin_hdd_dir;
 
 	std::string logo_hdd_dir;
+	int logo_rename_to_channelname;
 
 	std::string plugins_disabled;
 	std::string plugins_game;
@@ -540,6 +549,7 @@ struct SNeutrinoSettings
 	int mpkey_bookmark;
 	int mpkey_plugin;
 	int mpkey_next3dmode;
+	int mpkey_vtxt;
 	int mpkey_goto;
 	int mpkey_subtitle;
 	int mpkey_next_repeat_mode;
@@ -771,6 +781,9 @@ struct SNeutrinoSettings
 	//movieplayer
 	int   movieplayer_repeat_on;
 
+	//two erweiterungen
+	int infoviewer_ecm_info;
+
 	//zapit setup
 	std::string StartChannelTV;
 	std::string StartChannelRadio;
@@ -791,6 +804,7 @@ struct SNeutrinoSettings
 	std::string	sub_font_file;
 	std::string	update_dir;
 	int	adzap_zapBackPeriod;
+	int	menu_numbers_as_icons;
 	// USERMENU
 	typedef enum
 	{
