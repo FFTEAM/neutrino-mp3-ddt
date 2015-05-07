@@ -53,23 +53,23 @@ void CKernelOptions::loadModule(int i)
 	if (j >= modules[i].moduleList.size() - 1) {
 		// dependencies come without options
 		if (modules[i].moduleList.back().second.empty())
-			my_system(2, "insmod", modules[i].moduleList.back().first.c_str());
+			my_system(2, "modprobe", modules[i].moduleList.back().first.c_str());
 		else
-			system(("insmod " + modules[i].moduleList.back().first + " " + modules[i].moduleList.back().second).c_str());
+			system(("modprobe " + modules[i].moduleList.back().first + " " + modules[i].moduleList.back().second).c_str());
 	return;
 	}
 
 	for (j = 0; j < modules[i].moduleList.size(); j++) {
 		if (modules[i].moduleList.back().second.empty())
-			my_system(2, "insmod", modules[i].moduleList[j].first.c_str());
+			my_system(2, "modprobe", modules[i].moduleList[j].first.c_str());
 		else
-			system(("insmod " + modules[i].moduleList[j].first + " " + modules[i].moduleList.back().second).c_str());
+			system(("modprobe " + modules[i].moduleList[j].first + " " + modules[i].moduleList.back().second).c_str());
 	}
 }
 
 void CKernelOptions::unloadModule(int i)
 {
-	my_system(2, "rmmod", modules[i].moduleList.back().first.c_str());
+	my_system(3, "modprobe", "-r", modules[i].moduleList.back().first.c_str());
 }
 
 void CKernelOptions::updateStatus(void)
