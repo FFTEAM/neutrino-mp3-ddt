@@ -1,0 +1,242 @@
+/*
+	FFTeam yWeb Style by shanthi- Do not modify.
+V2
+*/
+
+/*	body's + Schriftfarbe*/
+body,.work_box_body {
+background-color: #323232;
+color: #FFF;
+}
+
+.diag {
+background-color: #262424 !important;
+}
+
+.detail_title,.detail_title_active {
+background-color: #474747 !important;
+}
+
+button, input, select, form, td,.y_form_header {
+color: #FFF;
+}
+.ep_bouquet_name, .atimer {
+    background: none repeat scroll 0% 0% #454545 !important;
+}
+.ep_bouquet_item:hover {
+    background-color: #595959 !important;
+}
+
+#epglist th {
+text-align: left !important;
+}
+
+#epg_info {
+background-color: #565656 !important;
+}
+
+.y_wait_box {
+left: 400px !important;
+}
+
+.y_wait_box_body {
+background-color: #5D5D5D !important;
+}
+
+.y_form_section, .y_live_button {
+color: #F60 !important;
+}
+
+.y_menu_prim_box_body,.y_menu_sec_section {
+background-image: linear-gradient(to bottom, #545454 0%, #000 100%);
+background-color: #323232;
+}
+
+.y_menu_prim_box_head {
+background: #535353;
+}
+
+/*überschriften der Boxen */
+.y_menu_sec_box_head h2,.work_box_head_h2,.work_box_head h2,.y_head {
+color: #F60 !important;
+}
+
+.y_menu_sec li a { 
+text-shadow: 4px 2px 3px #7D2C07 !important;
+}
+
+/*Fortschrittbalken der Sendung*/
+.cslider_table {
+border: none;
+}
+.cslider_noepg {
+background-color: #E44123;
+}
+.cslider_free {
+background-color: #3F0;
+}
+.cslider_used {
+/*background-color: #F60 !important;*/
+width: 44px;
+height: 10px;
+padding: 0px;
+margin-bottom: 5px;
+border-right: 1px solid #FF8E42;
+border-width: 0px 1px 1px;
+border-style: none solid solid;
+border-color: -moz-use-text-color #FF8E42 #FF8E42;
+-moz-border-top-colors: none;
+-moz-border-right-colors: none;
+-moz-border-bottom-colors: none;
+-moz-border-left-colors: none;
+border-image: none;
+background: linear-gradient(to right, #0F0 0%, #8DFF00 89%, #8DFF00 92%, rgba(255, 63, 0, 0.89) 94%, rgba(255, 0, 0, 0.96) 100%) repeat scroll 0% 0% transparent;
+}
+.y_menu_prim li a {
+text-shadow: 2px 2px 2px rgb(248, 156, 17);
+}
+.y_menu_prim li a:hover {
+color: #0EE12D;
+text-shadow: 1px 1px 2px rgba(221, 221, 121, 0.76) !important;
+}
+.y_menu_prim li.selected a {
+color: #111111;
+}
+/*Nach anklicken  andere Farbe*/
+.y_menu_prim li a:focus {
+color: #F3A144 !important;
+text-shadow: 1px 1px 3px rgba(221, 221, 121, 0.76) !important;
+}
+
+a,.y_form_header_oline,.lt_table th {
+color: #FFF !important;
+text-shadow: 2px 2px 2px #F60 !important;
+}
+
+a:hover {
+color: #F60 !important;
+}
+
+/*Im Bouquet-edit ändert bei Mausüber die Farbe der Zeile*/
+#bouqueteditorlist .a:hover {
+background-color: #222 !important;
+}
+
+#bouqueteditorlist .b:hover {
+background-color: #222 !important;
+}
+/* Im Bouquet-edit! Popupfenster zum Umbenennen*/
+.fly_form {
+border: 1px solid #F60 !important;
+background-color: #2A2A2A !important;
+}
+
+/*Umrandung der Boxen*/
+.y_menu_prim_box,.y_menu_sec_box,.work_box {
+border: 1px solid #F60 !important;
+}
+
+a.clist:hover {
+text-decoration: none !important;
+}
+
+/*Umrandung der Button*/
+button, input[type="button"], input[type="submit"] {
+border: 1px solid #F60 !important;
+}
+
+/* Logo */
+#prim {
+background: url("/images/tux-ywebm3.png") no-repeat scroll left top transparent !important;
+height: 38px;
+}
+
+/*	Schriftfarbe Version/Uhrzeit */
+td {
+color: #FFF;
+}
+
+#clock {
+color: #F60 !important;
+}
+
+/*	Fensterhintergründe und Schriftfarben (Y_Ext_Settings.yhtm) */
+.work_box_head,.y_menu_sec_box_head {
+background-image: linear-gradient(to bottom, #545454 0%, #000 100%);
+}
+
+.extbox{
+background: #444 !important;
+color: #F60 !important;
+font-size: 112% !important;
+}
+
+input[type="text"], input[type="password"], select {
+background: #444 !important;
+color: #FFF !important;
+}
+
+/*Eingabefelder extra hervorheben*/
+input[type="text"]:focus, input[type="password"]:focus {
+background: none repeat scroll 0% 0% #222 !important;
+}
+
+.y_epg_info,.y_epg_info #description {
+background-color: #555 !important;
+}
+
+#epglist th {
+color: #FFF !important;
+}
+
+/*Boxen linke Seite*/
+.y_menu_sec_box_body {
+background-color: #4F4F4F;
+}
+
+.y_text_boxcontrol_div_progress {
+color: #FFF;
+}
+
+/*Box rechts Senderliste*/
+.bouquetitemlist .logo_cell,.channel_logo {
+background: none repeat scroll 0% 0% #444;
+}
+
+.bouquetitemlist .logo_cell a {
+background-color: #444;
+}
+
+.aepg {
+background-color: #444;
+}
+.a {
+background-color: #444;
+}
+.a:hover {
+background-color: #333 !important;
+}
+.bepg {
+ background-color: #555;
+}
+.b {
+background-color: #555;
+}
+.b:hover {
+background-color: #333 !important;
+}		
+.cepg {
+background-color: #222;
+}
+.c {
+background-color: #222;
+}
+.c:hover {
+background-color: #333 !important;
+}
+	
+#audiobar_right,
+#sigbar_right,
+#snrbar_right {
+background-color: #4F4F4F !important;
+}
