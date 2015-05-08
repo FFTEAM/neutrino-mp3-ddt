@@ -261,6 +261,7 @@ CFSMounter::MountRes CFSMounter::mount(const std::string &ip, const std::string 
 		cmd += username;
 		cmd += ",password=";
 		cmd += password;
+		cmd += ",iocharset=UTF8";
 		//cmd += ",unc=//"; for whats needed?
 		//cmd += ip;
 		//cmd += '/';
