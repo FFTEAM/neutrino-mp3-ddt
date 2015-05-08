@@ -419,7 +419,11 @@ int CMoviePluginChangeExec::exec(CMenuTarget* parent, const std::string & action
 {
 	int sel= atoi(actionKey.c_str());
 	parent->hide();
-	if (sel>=0)
+	if (actionKey == "teletext") {
+		g_RCInput->postMsg(CRCInput::RC_timeout, 0);
+		g_RCInput->postMsg(CRCInput::RC_text, 0);
+	}
+	else if (sel>=0)
 	{
 			g_settings.movieplayer_plugin=g_PluginList->getName(sel);
 	}
@@ -527,6 +531,14 @@ bool CTZChangeNotifier::changeNotify(const neutrino_locale_t, void * Data)
 			perror("unlink failed");
 		if (symlink(cmd.c_str(), "/etc/localtime"))
 			perror("symlink failed");
+#if 0 //nur für yoctobasis nötig
+	/* for yocto tzdata compatibility */
+	FILE *f = fopen("/etc/timezone", "w");
+	if (f) {
+		fprintf(f, "%s\n", zone.c_str());
+		fclose(f);
+	}
+#endif
 #if 0
 		cmd = ":" + zone;
 		setenv("TZ", cmd.c_str(), 1);
