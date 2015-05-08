@@ -50,6 +50,8 @@ extern CPictureViewer *g_PicViewer;
 // nhttpd
 #include "neutrinoapi.h"
 #include "controlapi.h"
+#include <hardware_caps.h>
+#include <system/helpers.h>
 #include <video.h>
 #include <zapit/femanager.h>
 
@@ -60,7 +62,7 @@ extern CBouquetManager *g_bouquetManager;
 #if HAVE_DUCKBOX_HARDWARE
 #define EVENTDEV "/dev/input/event0"
 #elif HAVE_SPARK_HARDWARE
-#if BOXMODEL_SPARK7162
+#if HAVE_SPARK_HARDWARE
 #define EVENTDEV "/dev/input/nevis_ir"
 #else
 #define EVENTDEV "/dev/input/event1"
