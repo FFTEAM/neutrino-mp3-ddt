@@ -1071,8 +1071,8 @@ void CInfoViewerBB::paintEmuIcons(int decMode)
 				icon_offset += emus_icon_sizeW[e] + ((g_settings.casystem_display == 1) ? 2 : 2);
 				icon_emuX   += icon_offset;
 			}
-				else if (e == 4)
-					icon_emuX += emus_icon_sizeW[e] + 15 + ((g_settings.casystem_display == 1) ? 2 : 2);
+				else if (e == 5)
+					icon_emuX += emus_icon_sizeW[e] + 1 + ((g_settings.casystem_display == 1) ? 2 : 2);
 				else
 					icon_emuX += emus_icon_sizeW[e] + ((g_settings.casystem_display == 1) ? 2 : 2);
 		}
