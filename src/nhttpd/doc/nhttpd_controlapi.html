@@ -318,9 +318,8 @@ Beispiel:<br>
 <b>Rückgabe:</b><br>
 <br>
 Als Rückgabe wird die Eventliste des durch die channel_id<br>
-identifizierten Senders gesendet, d. h. eine Liste, welche Filme auf<br>
-diesem Sender kommen. Jede Zeile wird von einem Enter (\n) von der<br>
-nächsten getrennt.<br>
+identifizierten Senders gesendet, das heißt eine Liste, welche Filme auf<br>
+diesem Sender kommen. Jede Zeile wird von einem Enter (\n) von der nächsten getrennt.<br>
 <br>
 <b>Rückgabe-Format:</b> EVENTID Startzeit Dauer Titel der Sendung<br>
 <br>
@@ -417,9 +416,9 @@ das EPG als XML-Liste zurück.<br>
 channel_name=Ein oder mehrere durch Komma getrennte Sendernamen.<br>
 Wird details=true angegeben, dann werden zusätzlich info1 and info2 mit 
 ausgegeben.<br>
-Zur Begrenzung der Listeneinträge dient max für die Anzahl der Elemente, 
+Zur Begrenzung der Menge der Listeneinträge, kann max für die Anzahl der Elemente,
 oder <br>
-stoptime für die Uhrzeit (Unix Zeit), bis zu der Angaben gemacht werden sollen.<br>
+stoptime für die Uhrzeit (Unix Zeit), bis zu der Angaben gemacht werden sollen, begrenzt werden.<br>
 <br>
 <b>ACHTUNG: </b>Die Angabe von mehreren Sendern hat keinen Effekt.
 Nur Ergebnisse des ersten Senders werden angezeigt!<br>
@@ -807,7 +806,7 @@ Beispiel:<br>
 <b>Parameter:</b> stopplayback<br>
 <b>Rückgabe:</b><br>
 Stoppt die Dekodierung, um Graben zu können. Zusätzlich wird der<br>
-sectionsd gestoppt. Rückgabewert sollte ok für Erfolg sein.<br>
+Sectionsd gestoppt. Rückgabewert sollte ok für Erfolg sein.<br>
 <br>
 <b>Rückgabe-Format:</b> ok / error<br>
 <div class="example">
@@ -819,7 +818,7 @@ ok<br>
 <br>
 <b>Parameter:</b> startplayback<br>
 <b>Rückgabe:</b><br>
-Startet die Decodierung nach dem Graben wieder, sectionsd wird auch<br>
+Startet die Decodierung nach dem Graben wieder, Sectionsd wird auch<br>
 wieder gestartet. Rückgabewert sollte ok für Erfolg sein.<br>
 <br>
 <b>Rückgabe-Format:</b> ok<br>
@@ -844,7 +843,7 @@ Beispiel:<br>
 <br>
 <b>Parameter:</b> stopsectionsd<br>
 <b>Rückgabe:</b><br>
-Stoppt den sectionsd zum Grabben. Rückgabewert sollte ok für Erfolg sein.<br>
+Stoppt den Sectionsd zum Grabben. Rückgabewert sollte ok für Erfolg sein.<br>
 <br>
 <b>Rückgabe-Format:</b> ok<br>
 <div class="example">
@@ -856,7 +855,7 @@ ok<br>
 <br>
 <b>Parameter:</b> startsectionsd<br>
 <b>Rückgabe:</b><br>
-Startet sectionsd nach dem Grabben wieder. Rückgabewert sollte ok<br>
+Startet Sectionsd nach dem Grabben wieder. Rückgabewert sollte ok<br>
 für Erfolg sein.<br>
 <br>
 <b>Rückgabe-Format:</b> ok<br>
@@ -1380,7 +1379,7 @@ Bildschirm erscheint. Siehe auch Kapitel 16: popup. alarmTime ist<br>
 die Zeit des Timer-Starts stopTime ist die Stoppzeit für den Timer<br>
 data ist der Name des Senders.<br>
 <br>
-<i>data</i> enthält weitere Angaben zum Timer. Bei RECORD z. B. den Sendernamen.<br>
+<i>data</i> enthält weitere Angaben zum Timer. Bei RECORD zum Beispiel den Sendernamen.<br>
 Wurde format=id angegeben, so wird statt des Sendernamens die channel-id 
 ausgegeben.<div class="example">
 Beispiel:<br>
@@ -1388,7 +1387,7 @@ Beispiel:<br>
 &gt;&gt;&gt;http://box_ip/control/timer<br>
 1 1 1 4 1034309516 1034309576 1034284376 555089<br>
 <br>
-d. h. event 1, SHUTDOWN, DAILY, nach 4 Timerausführungen wird der<br>
+das heisst event 1, SHUTDOWN, DAILY, nach 4 Timerausführungen wird der<br>
 Timer gelöscht, Hinweiszeit, Alarm/Startzeit, Stoppzeit,<br>
 Kanal/Daten. Die Zeiten sind time_t (Unix Zeitstempel)<br>
 </div>
@@ -1535,8 +1534,8 @@ Hinweise: <br>
 ----------------------------------<br>
 Innerhalb eines Aufrufes können mehrere Kommandos gleichzeitig angegeben werden.<br>
 Allerdings müssen sie von unterschiedlichem Typ sein.<br>
-Bei z. B. zwei rect-Parametern innerhalb eines Aufrufes wird der zweite Parameter<br>
-ignoriert. Abgearbeitet werden die Kommandos in der Reihenfolge:<br>
+Bei zum Beispiel zwei rect-Parametern innerhalb eines Aufrufes wird der zweite <br>
+Parameter ignoriert. Abgearbeitet werden die Kommandos in der Reihenfolge:<br>
 lock, clear, png, raw, line, rect, xpos, ypos, size, color, font, text, update.<br>
 Der Parameter lock ist erforderlich, da ohne Sperrung das Displays für Neutrino, <br>
 die über den nhttpd gemachten Ausgaben auf dem Display, spätestens nach einer Sekunde<br>
@@ -1805,9 +1804,9 @@ Schaltet Scartmode ein oder aus.<br>
 <b>Parameter:</b> &lt;keyname&gt;, repeat=&lt;n&gt; (default 1), delay=&lt;delaytime&gt; (default 250)<br>
 <b>Rückgabe:</b> ok<br>
 <br>
-Die Taste mit dem Namen &lt;keyname&gt; wird emuliert. &lt;keyname&gt; sind<br>
+Die Taste mit dem Namen &lt;keyname&gt; wird emuliert. Als &lt;keyname&gt; sind<br>
 alle existierende Tasten, auch Tastaturtasten. Es werden &lt;n&gt;<br>
-Tastendrücke geschickt, mit einer Pause von &lt;delaytime&gt;<br>
+Tastendrücke geschickt, mit einer Pause (Verzögerung) von &lt;delaytime&gt;<br>
 dazwischen. Im Detail: Erstmals wird ein KEY_PRESSED Event geschickt,<br>
 danach, &lt;n&gt; - 1 KEY_AUTOREPEAT Events mit &lt;delaytime&gt;<br>
 Millisekunden Verzögerung, danach ein KEY_RELEASED Event.<br>
@@ -1817,7 +1816,7 @@ Millisekunden Verzögerung, danach ein KEY_RELEASED Event.<br>
 <br>
 Äquivalent zur ersten Form, mit repeat = &lt;time&gt;*1000/&lt;delaytime&gt;.<br>
 Das bedeutet, die Taste &lt;keyname&gt; für &lt;delaytime&gt; Sekunden zu senden.<br>
-Dies ist die Semantik der Argumenten des Programms rcsim. <br>
+Dies ist die Semantik von den Argumenten des Programms rcsim. <br>
 <div class="example">
 Beispiel:<br>
 <br>
