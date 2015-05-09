@@ -7,6 +7,9 @@
 #include <limits.h>
 #include <map>
 #include <set>
+#ifdef ENABLE_FREESATEPG
+#include "freesatv2.h"
+#endif
 
 #include "SIutils.hpp"
 #include "debug.h"
@@ -2015,6 +2018,9 @@ static inline unsigned int recode(unsigned char d, int cp)
 	}
 }
 
+#ifdef ENABLE_FREESATEPG
+static freesatHuffmanDecoder *huffmanDecoder = NULL;
+#endif
 std::string convertDVBUTF8(const char *data, int len, int table, int tsidonid)
 {
 	int newtable = 0;
@@ -2081,8 +2087,11 @@ std::string convertDVBUTF8(const char *data, int len, int table, int tsidonid)
 	case 0x1F:
 		{
 #ifdef ENABLE_FREESATEPG
-			std::string decoded_string = freesatHuffmanDecode(std::string(data, len));
-			if (!decoded_string.empty()) return decoded_string;
+			if (!huffmanDecoder)
+				huffmanDecoder = new freesatHuffmanDecoder;
+			std::string decoded_string = huffmanDecoder->decode((const unsigned char *)data, len);
+			if (!decoded_string.empty())
+				return decoded_string;
 #endif
 		}
 		++i;

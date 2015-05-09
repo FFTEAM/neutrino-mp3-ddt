@@ -102,7 +102,7 @@ static bool messaging_zap_detected = false;
 //NTP-Config
 #define CONF_FILE CONFIGDIR "/neutrino.conf"
 
-std::string ntp_system_cmd_prefix = find_executable("rdate") + "-s ";
+std::string ntp_system_cmd_prefix = "ntpdate ";
 
 std::string ntp_system_cmd;
 std::string ntpserver;
@@ -134,8 +134,10 @@ OpenThreads::Mutex filter_mutex;
 static CTimeThread threadTIME;
 static CEitThread threadEIT;
 static CCNThread threadCN;
+#ifdef ENABLE_VIASATEPG
 // ViaSAT uses pid 0x39 instead of 0x12
 static CEitThread threadVSEIT("viasatThread", 0x39);
+#endif
 
 #ifdef ENABLE_FREESATEPG
 static CFreeSatThread threadFSEIT;
@@ -837,9 +839,11 @@ static void wakeupAll()
 {
 	threadCN.change(0);
 	threadEIT.change(0);
-	threadVSEIT.change(0);
 #ifdef ENABLE_FREESATEPG
 	threadFSEIT.change(0);
+#endif
+#ifdef ENABLE_VIASATEPG
+	threadVSEIT.change(0);
 #endif
 #ifdef ENABLE_SDT
 	threadSDT.change(0);
@@ -960,9 +964,11 @@ static void commandserviceChanged(int connfd, char *data, const unsigned dataLen
 		threadCN.setCurrentService(messaging_current_servicekey);
 		threadEIT.setDemux(cmd->dnum);
 		threadEIT.setCurrentService(uniqueServiceKey /*messaging_current_servicekey*/);
-		threadVSEIT.setCurrentService(messaging_current_servicekey);
 #ifdef ENABLE_FREESATEPG
 		threadFSEIT.setCurrentService(messaging_current_servicekey);
+#endif
+#ifdef ENABLE_VIASATEPG
+		threadVSEIT.setCurrentService(messaging_current_servicekey);
 #endif
 #ifdef ENABLE_SDT
 		threadSDT.setCurrentService(messaging_current_servicekey);
@@ -1046,6 +1052,9 @@ static void commandDumpStatusInformation(int /*connfd*/, char* /*data*/, const u
 		 "Number of cached nvod-events: %u\n"
 		 "Number of cached meta-services: %u\n"
 		 //    "Resource-usage: maxrss: %ld ixrss: %ld idrss: %ld isrss: %ld\n"
+#ifdef ENABLE_VIASATEPG
+		 "ViaSat enabled\n"
+#endif
 #ifdef ENABLE_FREESATEPG
 		 "FreeSat enabled\n"
 #else
@@ -1741,11 +1750,12 @@ CEitThread::CEitThread()
 	: CEventsThread("eitThread")
 {
 }
-
+#ifdef ENABLE_VIASATEPG
 CEitThread::CEitThread(std::string tname, unsigned short pid)
 	: CEventsThread(tname, pid)
 {
 }
+#endif
 
 /* EIT thread hooks */
 void CEitThread::addFilters()
@@ -1780,7 +1790,7 @@ void CEitThread::beforeSleep()
 				&current_service,
 				sizeof(messaging_current_servicekey));
 	}
-	if(notify_complete)
+	if (notify_complete && !access(CONFIGDIR "/epgdone.sh", X_OK))
 		system(CONFIGDIR "/epgdone.sh");
 }
 
@@ -2186,7 +2196,7 @@ bool CEitManager::Start()
 	max_events = config.epg_max_events;
 	epg_save_frequently = config.epg_save_frequently;
 
-	if (find_executable("rdate").empty()){
+	if (find_executable("ntpdate").empty()){
 		ntp_system_cmd_prefix = find_executable("ntpd");
 		if (!ntp_system_cmd_prefix.empty()){
 			ntp_system_cmd_prefix += " -n -q -p ";
@@ -2255,10 +2265,12 @@ printf("SIevent size: %d\n", (int)sizeof(SIevent));
 	threadTIME.Start();
 	threadEIT.Start();
 	threadCN.Start();
-	threadVSEIT.Start();
 
 #ifdef ENABLE_FREESATEPG
 	threadFSEIT.Start();
+#endif
+#ifdef ENABLE_VIASATEPG
+	threadVSEIT.Start();
 #endif
 #ifdef ENABLE_SDT
 	threadSDT.Start();
@@ -2294,12 +2306,14 @@ printf("SIevent size: %d\n", (int)sizeof(SIevent));
 	threadEIT.StopRun();
 	threadCN.StopRun();
 	threadTIME.StopRun();
-	threadVSEIT.StopRun();
 #ifdef ENABLE_SDT
 	threadSDT.StopRun();
 #endif
 #ifdef ENABLE_FREESATEPG
 	threadFSEIT.StopRun();
+#endif
+#ifdef ENABLE_VIASATEPG
+	threadVSEIT.StopRun();
 #endif
 
 	xprintf("broadcasting...\n");
@@ -2324,9 +2338,6 @@ printf("SIevent size: %d\n", (int)sizeof(SIevent));
 	xprintf("join CN\n");
 	threadCN.Stop();
 
-	xprintf("join VSEIT\n");
-	threadVSEIT.Stop();
-
 #ifdef ENABLE_SDT
 	xprintf("join SDT\n");
 	threadSDT.Stop();
@@ -2334,6 +2345,10 @@ printf("SIevent size: %d\n", (int)sizeof(SIevent));
 #ifdef ENABLE_FREESATEPG
 	xprintf("join FSEIT\n");
 	threadFSEIT.Stop();
+#endif
+#ifdef ENABLE_VIASATEPG
+	xprintf("join VSEIT\n");
+	threadVSEIT.Stop();
 #endif
 #ifdef EXIT_CLEANUP
 	xprintf("[sectionsd] cleanup...\n");

@@ -24,3 +24,6 @@ libsectionsd_a_SOURCES = \
 	SIsections.cpp \
 	SIutils.cpp \
 	xmlutil.cpp
+
+libsectionsd_a_SOURCES += freesatv2.cpp
+
