@@ -1179,7 +1179,7 @@ void CAudioPlayerGui::scanXmlData(xmlDocPtr answer_parser, const char *nametag, 
 						}
 						child = xmlNextNode(child);
 					}
-					if(type){
+					if (type) {
 						if 	(strcmp("audio/mpeg", type) == 0) 	skip = false;
 						else if (strcmp("application/ogg", type) == 0) 	skip = false;
 						else if (strcmp("mp3", type) == 0) 		skip = false;
@@ -1855,7 +1855,7 @@ void CAudioPlayerGui::paintItemID3DetailsLine (int pos)
 		dline->paint(false);
 
 		// paint id3 infobox
-		if (ibox == NULL){
+		if (ibox == NULL) {
 			ibox = new CComponentsInfoBox(m_x, ypos2, m_width, m_info_height);
 			ibox->setFrameThickness(2);
 			ibox->setCorner(RADIUS_LARGE);
