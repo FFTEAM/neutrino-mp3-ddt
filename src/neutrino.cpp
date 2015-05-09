@@ -740,7 +740,7 @@ int CNeutrinoApp::loadSetup(const char * fname)
 	g_settings.plugins_script = configfile.getString( "plugins_script", "" );
 	g_settings.plugins_lua = configfile.getString( "plugins_lua", "" );
 
-	g_settings.logo_hdd_dir = configfile.getString( "logo_hdd_dir", "/media/sda1/logos" );
+	g_settings.logo_hdd_dir = configfile.getString( "logo_hdd_dir", "/var/logos" );
 	g_settings.logo_rename_to_channelname = configfile.getInt32("logo_rename_to_channelname", false);
 
 	g_settings.streaming_server_url = configfile.getString("streaming_server_url", "");
@@ -2487,8 +2487,9 @@ void CNeutrinoApp::screensaver(bool on)
 	}
 }
 
-void CNeutrinoApp::RealRun(CMenuWidget &mainMenu)
+void CNeutrinoApp::RealRun(CMenuWidget &_mainMenu)
 {
+	mainMenu = &_mainMenu;
 	neutrino_msg_t      msg;
 	neutrino_msg_data_t data;
 
@@ -2589,7 +2590,7 @@ void CNeutrinoApp::RealRun(CMenuWidget &mainMenu)
 					int old_epg = g_settings.epg_scan;
 					int old_mode = g_settings.epg_scan_mode;
 					int old_save_mode = g_settings.epg_save_mode;
-					mainMenu.exec(NULL, "");
+					mainMenu->exec(NULL, "");
 #if HAVE_SPARK_HARDWARE || HAVE_DUCKBOX_HARDWARE
 					CVFD::getInstance()->UpdateIcons();
 #endif
@@ -4614,6 +4615,7 @@ void stop_video()
 void sighandler (int signum)
 {
 	signal (signum, SIG_IGN);
+	signal (SIGTERM, SIG_IGN);
 	switch (signum) {
 	case SIGTERM:
 	case SIGINT:
@@ -4644,6 +4646,10 @@ int main(int argc, char **argv)
 	/* build date */
 	printf(">>> Neutrino (compiled %s %s) <<<\n", __DATE__, __TIME__);
 #endif
+	setsid();
+	setpgrp();
+	signal(SIGSEGV, sighandler);
+
 	g_Timerd = NULL;
 	g_Radiotext = NULL;
 	g_Zapit = NULL;
