@@ -52,8 +52,8 @@
 #define PLUGINDIR_VAR	"/var/tuxbox/plugins"
 #define PLUGINDIR_MNT	"/mnt/plugins"
 
-#define LOGODIR		ICONSDIR "/logo"
-#define LOGODIR_VAR	ICONSDIR_VAR "/logo"
+#define LOGODIR		ICONSDIR "/logos"
+#define LOGODIR_VAR	ICONSDIR_VAR "/logos"
 
 NEUTRINO_CPP  SNeutrinoSettings	g_settings;
 NEUTRINO_CPP  SglobalInfo	g_info;
