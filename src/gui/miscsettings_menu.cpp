@@ -54,6 +54,7 @@
 #include <driver/screen_max.h>
 #include <driver/scanepg.h>
 
+#include <system/debug.h>
 #include <zapit/femanager.h>
 #include <eitd/sectionsd.h>
 
@@ -129,7 +130,7 @@ int CMiscMenue::exec(CMenuTarget* parent, const std::string &actionKey)
 		char id[5];
 		int cnt = 0;
 		int enabled_count = 0;
-		for(unsigned int count=0;count < (unsigned int) g_PluginList->getNumberOfPlugins();count++)
+		for (unsigned int count = 0; count < (unsigned int) g_PluginList->getNumberOfPlugins();count++)
 		{
 			if (!g_PluginList->isHidden(count))
 			{
@@ -314,7 +315,7 @@ int CMiscMenue::showMiscSettingsMenu()
 
 	if (!g_info.hw_caps->can_shutdown) {
 		/* we don't have the energy menu, but put the sleeptimer directly here */
-		mf = new CMenuDForwarder(LOCALE_MISCSETTINGS_SLEEPTIMER, true, NULL, new CSleepTimerWidget(true));
+		mf = new CMenuDForwarder(LOCALE_MISCSETTINGS_SLEEPTIMER, true, NULL, new CSleepTimerWidget(true), NULL, CRCInput::RC_1);
 		mf->setHint("", LOCALE_MENU_HINT_INACT_TIMER);
 		misc_menue.addItem(mf);
 	}
@@ -422,7 +423,7 @@ int CMiscMenue::showMiscSettingsMenuEnergy()
 	if (shutdown_count.length() < 3)
 		shutdown_count.insert(0, 3 - shutdown_count.length(), ' ');
 	CStringInput * miscSettings_shutdown_count = new CStringInput(LOCALE_MISCSETTINGS_SHUTDOWN_COUNT, &shutdown_count, 3, LOCALE_MISCSETTINGS_SHUTDOWN_COUNT_HINT1, LOCALE_MISCSETTINGS_SHUTDOWN_COUNT_HINT2, "0123456789 ");
-	CMenuForwarder *m2 = new CMenuDForwarder(LOCALE_MISCSETTINGS_SHUTDOWN_COUNT, !g_settings.shutdown_real, shutdown_count, miscSettings_shutdown_count);
+	CMenuForwarder *m2 = new CMenuDForwarder(LOCALE_MISCSETTINGS_SHUTDOWN_COUNT, !g_settings.shutdown_real, NULL, miscSettings_shutdown_count);
 	m2->setHint("", LOCALE_MENU_HINT_SHUTDOWN_COUNT);
 
 	COnOffNotifier * miscNotifier = new COnOffNotifier(1);

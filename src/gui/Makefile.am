@@ -125,6 +125,11 @@ libneutrino_gui_a_SOURCES += \
 	glcdsetup.cpp
 endif
 
+if ENABLE_SHAIRPLAY
+libneutrino_gui_a_SOURCES += \
+	shairplay_setup.cpp
+endif
+
 if ENABLE_EXTUPDATE
 libneutrino_gui_a_SOURCES += \
 	update_ext.cpp

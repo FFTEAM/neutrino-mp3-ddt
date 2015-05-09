@@ -46,6 +46,10 @@
 #include <gui/pictureviewer_setup.h>
 #include <gui/webtv_setup.h>
 #include <gui/moviebrowser.h>
+#if ENABLE_SHAIRPLAY
+#include <gui/shairplay_setup.h>
+#endif
+
 
 #include <driver/screen_max.h>
 
@@ -91,8 +95,15 @@ int CMediaPlayerSetup::showMediaPlayerSetup()
 	mf->setHint(NEUTRINO_ICON_HINT_APLAY, LOCALE_MENU_HINT_APLAY_SETUP);
 	mediaSetup->addItem(mf);
 
+#if ENABLE_SHAIRPLAY
+	CShairPlaySetup isetup;
+	mf = new CMenuForwarder(LOCALE_SHAIRPLAY_HEAD, true, NULL, &isetup, "", CRCInput::RC_green);
+	mf->setHint("" /* FIXME */, LOCALE_MENU_HINT_SHAIRPLAY_SETUP);
+	mediaSetup->addItem(mf);
+#endif
+
 	CPictureViewerSetup psetup;
-	mf = new CMenuForwarder(LOCALE_PICTUREVIEWER_HEAD, true, NULL, &psetup, "", CRCInput::RC_green);
+	mf = new CMenuForwarder(LOCALE_PICTUREVIEWER_HEAD, true, NULL, &psetup, "", CRCInput::RC_blue);
 	mf->setHint(NEUTRINO_ICON_HINT_PICVIEW, LOCALE_MENU_HINT_PICTUREVIEWER_SETUP);
 	mediaSetup->addItem(mf);
 
@@ -111,6 +122,10 @@ int CMediaPlayerSetup::showMediaPlayerSetup()
 
 	mf = new CMenuForwarder(LOCALE_MOVIEPLAYER_YTPLAYBACK, true, NULL, &msetup, "show_ytmenu", CRCInput::convertDigitToKey(shortcut++));
 	mf->setHint(NEUTRINO_ICON_HINT_YTPLAY, LOCALE_MENU_HINT_YTPLAY_SETUP);
+	mediaSetup->addItem(mf);
+
+	mf = new CMenuForwarder(LOCALE_MOVIEPLAYER_NKPLAYBACK, true, NULL, &msetup, "show_nkmenu", CRCInput::convertDigitToKey(shortcut++));
+	mf->setHint(NEUTRINO_ICON_HINT_NKPLAY, LOCALE_MENU_HINT_NKPLAYBACK_SETUP);
 	mediaSetup->addItem(mf);
 
 

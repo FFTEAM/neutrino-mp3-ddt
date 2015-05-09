@@ -951,6 +951,8 @@ void MI_MOVIE_INFO::clear(void)
 	ytid = "";
 	ytitag = 0;
 	marked = false;
+	nkrtmp = true;
+	nkstreaming = "";
 }
 
 /************************************************************************

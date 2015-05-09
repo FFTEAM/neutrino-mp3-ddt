@@ -50,8 +50,10 @@
 #include <gui/widget/icons.h>
 
 #include <driver/screen_max.h>
+#include <driver/shairplay.h>
 
 #include <system/debug.h>
+#include <mymenu.h>
 #include <video.h>
 extern cVideo * videoDecoder;
 extern CInfoClock *InfoClock;
@@ -99,6 +101,14 @@ int CMediaPlayerMenu::exec(CMenuTarget* parent, const std::string &actionKey)
 		int res = audioPlayer->exec(NULL, "init");
 		return res /*menu_return::RETURN_REPAINT*/;
 	}
+#if ENABLE_SHAIRPLAY
+	else if (actionKey == "shairplay")
+	{
+		CNeutrinoApp::getInstance()->shairplay_enabled_cur = true;
+		CNeutrinoApp::getInstance()->shairPlay->restart();
+		return menu_return::RETURN_EXIT_ALL;
+	}
+#endif
 	else if	(actionKey == "inetplayer")
 	{
 		if (inetPlayer == NULL)
@@ -217,6 +227,15 @@ int CMediaPlayerMenu::initMenuMedia(CMenuWidget *m, CPersonalizeGui *p)
 			showNetworkNFSMounts(media, personalize);
 
 	}
+#if ENABLE_SHAIRPLAY
+	//shairplay
+	if (g_settings.shairplay_enabled && !CNeutrinoApp::getInstance()->shairplay_enabled_cur) {
+		CMenuForwarder *fw_shairplay = new CMenuForwarder(LOCALE_SHAIRPLAY_REENABLE, true, NULL, this, "shairplay");
+		fw_shairplay->setHint(NEUTRINO_ICON_HINT_INET_RADIO, LOCALE_MENU_HINT_SHAIRPLAY_REENABLE);
+		personalize->addSeparator(0);
+		personalize->addItem(media, fw_shairplay, &g_settings.personalize[SNeutrinoSettings::P_MEDIA_INETPLAY]);
+	}
+#endif
 	
 	int res = menu_return::RETURN_NONE;
 	
@@ -261,6 +280,11 @@ void CMediaPlayerMenu::showMoviePlayer(CMenuWidget *moviePlayer, CPersonalizeGui
 	CMenuForwarder *fw_yt = new CMenuForwarder(LOCALE_MOVIEPLAYER_YTPLAYBACK, true, NULL, &CMoviePlayerGui::getInstance(), "ytplayback");
 	fw_yt->setHint(NEUTRINO_ICON_HINT_YTPLAY, LOCALE_MENU_HINT_YTPLAY);
 	p->addItem(moviePlayer, fw_yt, &g_settings.personalize[SNeutrinoSettings::P_MPLAYER_YTPLAY]);
+
+	//netzkino
+	CMenuForwarder *fw_nk = new CMenuForwarder(LOCALE_MOVIEPLAYER_NKPLAYBACK, true, NULL, &CMoviePlayerGui::getInstance(), "nkplayback");
+	fw_nk->setHint(NEUTRINO_ICON_HINT_NKPLAY, LOCALE_MENU_HINT_NKPLAY);
+	p->addItem(moviePlayer, fw_nk, &g_settings.personalize[SNeutrinoSettings::P_MPLAYER_NKPLAY]);
 
 }
 

@@ -45,6 +45,7 @@
 #include <gui/infoclock.h>
 #include <gui/plugins.h>
 #include <gui/videosettings.h>
+#include <gui/widget/messagebox.h>
 #include <driver/screenshot.h>
 #include <driver/volume.h>
 #include <driver/display.h>
@@ -60,6 +61,7 @@
 #include <sys/timeb.h>
 #include <sys/mount.h>
 
+#include <eitd/edvbstring.h>
 #include <video.h>
 #include <libtuxtxt/teletext.h>
 #include <zapit/zapit.h>
@@ -298,6 +300,11 @@ int CMoviePlayerGui::exec(CMenuTarget * parent, const std::string & actionKey)
 		moviebrowser->setMode(MB_SHOW_YT);
 		isYT = true;
 	}
+	else if (actionKey == "nkplayback") {
+		isMovieBrowser = true;
+		moviebrowser->setMode(MB_SHOW_NK);
+		isNK = true;
+	}
 	else if (actionKey == "fileplayback") {
 		wakeup_hdd(g_settings.network_nfs_moviedir.c_str());
 	}
@@ -340,7 +347,9 @@ int CMoviePlayerGui::exec(CMenuTarget * parent, const std::string & actionKey)
 		CVFD::getInstance()->setMode(CVFD::MODE_TVRADIO);
 		CVFD::getInstance()->showServicename(file_name.c_str());
 		if (timeshift != TSHIFT_MODE_OFF) {
+			CVFD::getInstance()->ShowIcon(FP_ICON_TIMESHIFT, true);
 			PlayFile();
+			CVFD::getInstance()->ShowIcon(FP_ICON_TIMESHIFT, false);
 			break;
 		}
 		do {
@@ -651,49 +660,73 @@ bool CMoviePlayerGui::SelectFile()
 		EnableClockAndMute(false);
 		if (moviebrowser->exec(Path_local.c_str())) {
 			Path_local = moviebrowser->getCurrentDir();
-			CFile *file =  NULL;
-			filelist_it = filelist.end();
-			if (moviebrowser->getSelectedFiles(filelist, milist)) {
-				filelist_it = filelist.begin();
-				p_movie_info = *(milist.begin());
-				file = &(*filelist_it);
-			}
-			else if ((file = moviebrowser->getSelectedFile()) != NULL) {
+			CFile *file;
+			if ((file = moviebrowser->getSelectedFile()) != NULL) {
+				// get the movie info handle (to be used for e.g. bookmark handling)
 				p_movie_info = moviebrowser->getCurrentMovieInfo();
+				if (moviebrowser->getMode() == MB_SHOW_RECORDS) {
+					file_name = file->Name;
+				}
+				else if (isYT || isNK) {
+					pretty_name = file->Name;
+					file_name = file->Url;
+				}
+				fillPids();
+				if (file->Name.empty()) {
+					// reset pids for multi-program selection
+					vpid = 0;
+					currentapid = 0;
+				}
+
+				// get the start position for the movie
 				startposition = 1000 * moviebrowser->getCurrentStartPos();
 				printf("CMoviePlayerGui::SelectFile: file %s start %d apid %X atype %d vpid %x vtype %d\n", file_name.c_str(), startposition, currentapid, currentac3, vpid, vtype);
 
+				ret = true;
 			}
-			if (p_movie_info)
-				ret = prepareFile(&p_movie_info->file);
 		} else
 			menu_ret = moviebrowser->getMenuRet();
-		EnableClockAndMute(true);
+	} else if (filelist.size() > 0 && repeat_mode == REPEAT_TRACK) {
+		--filelist_it;
+		file_name = (*filelist_it).Name;
+		++filelist_it;
+		ret = true;
+	} else if (filelist.size() > 0 && filelist_it == filelist.end() && repeat_mode == REPEAT_ALL) {
+		filelist_it = filelist.begin();
+		file_name = (*filelist_it).Name;
+		++filelist_it;
+		ret = true;
+	} else if (filelist.size() > 0 && filelist_it != filelist.end()) {
+		file_name = (*filelist_it).Name;
+		++filelist_it;
+		ret = true;
 	} else { // filebrowser
 		EnableClockAndMute(false);
-		while (ret == false && filebrowser->exec(Path_local.c_str()) == true) {
+		if (filebrowser->exec(Path_local.c_str()) == true) {
 			Path_local = filebrowser->getCurrentDir();
-			CFile *file = NULL;
+			CFile *file = filebrowser->getSelectedFile();
 			filelist = filebrowser->getSelectedFiles();
 			filelist_it = filelist.end();
-			if (!filelist.empty()) {
+			if (filelist.size() > 1) {
 				filelist_it = filelist.begin();
-				file = &(*filelist_it);
-			}
-			if (file) {
-				is_file_player = true;
-				if (file->getType() == CFile::FILE_PLAYLIST)
+				file_name = (*filelist_it).Name;
+				++filelist_it;
+				ret = true;
+			} else if (file) {
+				file_name = file->Name;
+				ret = true;
+				if(file->getType() == CFile::FILE_PLAYLIST)
 					parsePlaylist(file);
-				if (!filelist.empty()) {
-					filelist_it = filelist.begin();
-					file = &(*filelist_it);
-				}
-				ret = prepareFile(file);
+				else if(file->getType() == CFile::FILE_ISO)
+					ret = mountIso(file);
 			}
-		}
-		menu_ret = filebrowser->getMenuRet();
+		} else
+			menu_ret = filebrowser->getMenuRet();
 		EnableClockAndMute(true);
 	}
+	if(ret && pretty_name.empty())
+		makeFilename();
+	//store last multiformat play dir
 	g_settings.network_nfs_moviedir = Path_local;
 
 	return ret;
@@ -1337,7 +1370,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 			clearSubtitle();
 #endif
 #if HAVE_SPARK_HARDWARE || HAVE_DUCKBOX_HARDWARE
-		} else if (msg == CRCInput::RC_text) {
+		} else if ((msg == CRCInput::RC_text || msg == (neutrino_msg_t) g_settings.mpkey_vtxt)) {
 			int pid = playback->GetFirstTeletextPid();
 			if (pid > -1) {
 				playback->SetTeletextPid(0);
@@ -1412,7 +1445,7 @@ void CMoviePlayerGui::PlayFileLoop(void)
 			makeScreenShot(false, true);
 		} else if (msg == CRCInput::RC_yellow) {
 			showFileInfos();
-		} else if (msg == CRCInput::RC_sat) {
+		} else if (msg == CRCInput::RC_sat || msg == CRCInput::RC_favorites) {
 			//FIXME do nothing ?
 		} else {
 			if (CNeutrinoApp::getInstance()->handleMsg(msg, data) & messages_return::cancel_all) {
