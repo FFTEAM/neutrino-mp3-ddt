@@ -114,7 +114,7 @@ int my_system(const char * cmd)
 
 int my_system(int argc, const char *arg, ...)
 {
-	int i = 0, ret, childExit = 0;
+	int i = 0, ret = 0, childExit = 0;
 #define ARGV_MAX 64
 	/* static right now but could be made dynamic if necessary */
 	int argv_max = ARGV_MAX;
@@ -136,6 +136,7 @@ int my_system(int argc, const char *arg, ...)
 	argv[i] = NULL; /* sentinel */
 	//fprintf(stderr,"%s:", __func__);for(i=0;argv[i];i++)fprintf(stderr," '%s'",argv[i]);fprintf(stderr,"\n");
 
+	pid_t parent_pid = getpgrp();
 	pid_t pid;
 	int maxfd = getdtablesize();// sysconf(_SC_OPEN_MAX);
 	switch (pid = vfork())
@@ -150,6 +151,7 @@ int my_system(int argc, const char *arg, ...)
 				close(i);
 			if (setsid() == -1)
 				perror("my_system setsid");
+			setpgid(getpid(), parent_pid);
 			if (execvp(argv[0], (char * const *)argv))
 			{
 				ret = -errno;
