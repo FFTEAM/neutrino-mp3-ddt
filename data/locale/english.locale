@@ -1886,6 +1886,7 @@ networkmenu.ssid_scan WLAN network scan
 networkmenu.ssid_scan_error No WLAN networks are found.
 networkmenu.ssid_scan_wait WLAN network scan in progress...
 networkmenu.test Test network now
+networkmenu.wlan_security Security
 neutrino_starting FFTEAM-Neutrino starting...
 nfs.alreadymounted directory already mounted
 nfs.automount Mount on startup

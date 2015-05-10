@@ -44,7 +44,6 @@
 #include <gui/widget/keyboard_input.h>
 #include <gui/widget/hintbox.h>
 #include <gui/widget/messagebox.h>
-
 #include <gui/network_service.h>
 
 #include <sys/socket.h>
@@ -164,6 +163,7 @@ void CNetworkSetup::readNetworkSettings()
 	mac_addr		= networkConfig->mac_addr;
 	network_ssid		= networkConfig->ssid;
 	network_key		= networkConfig->key;
+	network_encryption	= (networkConfig->encryption == "WPA") ? 0 : 1;
 }
 
 void CNetworkSetup::backupNetworkSettings()
@@ -181,6 +181,7 @@ void CNetworkSetup::backupNetworkSettings()
 	old_network_key			= networkConfig->key;
 	old_ifname 			= g_settings.ifname;
 	old_mac_addr			= mac_addr;
+	old_network_encryption		= (networkConfig->encryption == "WPA") ? 0 : 1;
 }
 
 #define OPTIONS_NTPENABLE_OPTION_COUNT 2
@@ -188,6 +189,13 @@ const CMenuOptionChooser::keyval OPTIONS_NTPENABLE_OPTIONS[OPTIONS_NTPENABLE_OPT
 {
 	{ CNetworkSetup::NETWORK_NTP_OFF, LOCALE_OPTIONS_NTP_OFF },
 	{ CNetworkSetup::NETWORK_NTP_ON, LOCALE_OPTIONS_NTP_ON }
+};
+
+#define OPTIONS_WLAN_SECURITY_OPTION_COUNT 2
+const CMenuOptionChooser::keyval_ext OPTIONS_WLAN_SECURITY_OPTIONS[OPTIONS_WLAN_SECURITY_OPTION_COUNT] =
+{
+        { 0, NONEXISTANT_LOCALE, "WPA" },
+        { 1, NONEXISTANT_LOCALE, "WPA2"  }
 };
 
 static int my_filter(const struct dirent * dent)
@@ -312,30 +320,6 @@ int CNetworkSetup::showNetworkSetup()
 	networkSettings->addItem(o1);	//set on start
 	networkSettings->addItem(GenericMenuSeparatorLine);
 	//------------------------------------------------
-	if(ifcount > 1) // if there is only one, its probably wired
-	{
-		//ssid
-		CKeyboardInput * networkSettings_ssid = new CKeyboardInput(LOCALE_NETWORKMENU_SSID, &network_ssid);
-		//key
-		CKeyboardInput * networkSettings_key = new CKeyboardInput(LOCALE_NETWORKMENU_PASSWORD, &network_key);
-		CMenuForwarder *m9 = new CMenuDForwarder(LOCALE_NETWORKMENU_SSID      , networkConfig->wireless, network_ssid , networkSettings_ssid );
-		CMenuForwarder *m10 = new CMenuDForwarder(LOCALE_NETWORKMENU_PASSWORD , networkConfig->wireless, network_key , networkSettings_key );
-		CMenuForwarder *m11 = new CMenuForwarder(LOCALE_NETWORKMENU_SSID_SCAN , networkConfig->wireless, NULL, this, "scanssid");
-
-		m9->setHint("", LOCALE_MENU_HINT_NET_SSID);
-		m10->setHint("", LOCALE_MENU_HINT_NET_PASS);
-		m11->setHint("", LOCALE_MENU_HINT_NET_SSID_SCAN);
-
-		wlanEnable.Add(m9);
-		wlanEnable.Add(m10);
-		wlanEnable.Add(m11);
-
-		networkSettings->addItem( m11);	//ssid scan
-		networkSettings->addItem( m9);	//ssid
-		networkSettings->addItem( m10);	//key
-		networkSettings->addItem(GenericMenuSeparatorLine);
-	}
-	//------------------------------------------------
 	networkSettings->addItem(mac);	//eth id
 	networkSettings->addItem(GenericMenuSeparatorLine);
 	//-------------------------------------------------
@@ -350,17 +334,38 @@ int CNetworkSetup::showNetworkSetup()
 	//------------------------------------------------
 	networkSettings->addItem( m4);	//gateway
 	networkSettings->addItem( m5);	//nameserver
+	networkSettings->addItem(GenericMenuSeparatorLine);
 	//------------------------------------------------
-	sectionsdConfigNotifier = NULL;
-	CMenuWidget ntp(LOCALE_MAINSETTINGS_NETWORK, NEUTRINO_ICON_SETTINGS, width, MN_WIDGET_ID_NETWORKSETUP_NTP);
-#ifdef ENABLE_GUI_MOUNT
-	CMenuWidget networkmounts(LOCALE_MAINSETTINGS_NETWORK, NEUTRINO_ICON_SETTINGS, width, MN_WIDGET_ID_NETWORKSETUP_MOUNTS);
-#endif
-	CProxySetup proxy(LOCALE_MAINSETTINGS_NETWORK);
-	CNetworkServiceSetup services;
+	if(ifcount > 1) // if there is only one, its probably wired
+	{
+		//ssid
+		CKeyboardInput * networkSettings_ssid = new CKeyboardInput(LOCALE_NETWORKMENU_SSID, &network_ssid);
+		//key
+		CKeyboardInput * networkSettings_key = new CKeyboardInput(LOCALE_NETWORKMENU_PASSWORD, &network_key);
+		CMenuForwarder *m9 = new CMenuDForwarder(LOCALE_NETWORKMENU_SSID      , networkConfig->wireless, network_ssid , networkSettings_ssid );
+		CMenuForwarder *m10 = new CMenuDForwarder(LOCALE_NETWORKMENU_PASSWORD , networkConfig->wireless, network_key , networkSettings_key );
+		CMenuForwarder *m11 = new CMenuForwarder(LOCALE_NETWORKMENU_SSID_SCAN , networkConfig->wireless, NULL, this, "scanssid");
+		CMenuOptionChooser* m12 = new CMenuOptionChooser(LOCALE_NETWORKMENU_WLAN_SECURITY, &network_encryption, OPTIONS_WLAN_SECURITY_OPTIONS, OPTIONS_WLAN_SECURITY_OPTION_COUNT, true);
 
+		m9->setHint("", LOCALE_MENU_HINT_NET_SSID);
+		m10->setHint("", LOCALE_MENU_HINT_NET_PASS);
+		m11->setHint("", LOCALE_MENU_HINT_NET_SSID_SCAN);
+
+		wlanEnable.Add(m9);
+		wlanEnable.Add(m10);
+		wlanEnable.Add(m11);
+		wlanEnable.Add(m12);
+
+		networkSettings->addItem( m11);	//ssid scan
+		networkSettings->addItem( m9);	//ssid
+		networkSettings->addItem( m10);	//key
+		networkSettings->addItem( m12); //encryption
+		networkSettings->addItem(GenericMenuSeparatorLine);
+	}
+	//------------------------------------------------
 	//ntp submenu
 	sectionsdConfigNotifier = new CSectionsdConfigNotifier;
+	CMenuWidget ntp(LOCALE_MAINSETTINGS_NETWORK, NEUTRINO_ICON_SETTINGS, width, MN_WIDGET_ID_NETWORKSETUP_NTP);
 	mf = new CMenuForwarder(LOCALE_NETWORKMENU_NTPTITLE, true, NULL, &ntp, NULL, CRCInput::RC_yellow);
 	mf->setHint("", LOCALE_MENU_HINT_NET_NTP);
 	networkSettings->addItem(mf);
@@ -369,6 +374,7 @@ int CNetworkSetup::showNetworkSetup()
 
 #ifdef ENABLE_GUI_MOUNT
 	//nfs mount submenu
+	CMenuWidget networkmounts(LOCALE_MAINSETTINGS_NETWORK, NEUTRINO_ICON_SETTINGS, width, MN_WIDGET_ID_NETWORKSETUP_MOUNTS);
 	mf = new CMenuForwarder(LOCALE_NETWORKMENU_MOUNT, true, NULL, &networkmounts, NULL, CRCInput::RC_blue);
 	mf->setHint("", LOCALE_MENU_HINT_NET_MOUNT);
 	networkSettings->addItem(mf);
@@ -376,11 +382,13 @@ int CNetworkSetup::showNetworkSetup()
 #endif
 
 	//proxyserver submenu
+	CProxySetup proxy(LOCALE_MAINSETTINGS_NETWORK);
 	mf = new CMenuForwarder(LOCALE_FLASHUPDATE_PROXYSERVER_SEP, true, NULL, &proxy, NULL, CRCInput::RC_0);
 	mf->setHint("", LOCALE_MENU_HINT_NET_PROXY);
 	networkSettings->addItem(mf);
 
 	//services
+	CNetworkServiceSetup services;
 	mf = new CMenuForwarder(LOCALE_NETWORKMENU_SERVICES, true, NULL, &services, NULL, CRCInput::RC_1);
 	mf->setHint("", LOCALE_MENU_HINT_NET_SERVICES);
 	networkSettings->addItem(mf);
@@ -489,7 +497,7 @@ bool CNetworkSetup::checkStringSettings()
 			return true;
 	}
 	if(CNetworkConfig::getInstance()->wireless) {
-		if((old_network_ssid != network_ssid) || (old_network_key != network_key))
+		if((old_network_ssid != network_ssid) || (old_network_key != network_key) || (old_network_encryption != network_encryption))
 			return true;
 	}
 
@@ -518,6 +526,7 @@ void CNetworkSetup::prepareSettings()
 	networkConfig->hostname 	= network_hostname;
 	networkConfig->ssid 		= network_ssid;
 	networkConfig->key 		= network_key;
+	networkConfig->encryption 	= network_encryption ? "WPA2" : "WPA";
 
 	readNetworkSettings();
 	backupNetworkSettings();
@@ -632,6 +641,7 @@ void CNetworkSetup::restoreNetworkSettings()
 	network_hostname		= old_network_hostname;
 	network_ssid			= old_network_ssid;
 	network_key			= old_network_key;
+	network_encryption		= old_network_encryption;
 
 	networkConfig->automatic_start 	= network_automatic_start;
 	networkConfig->inet_static 	= (network_dhcp ? false : true);
@@ -643,6 +653,7 @@ void CNetworkSetup::restoreNetworkSettings()
 	networkConfig->hostname 	= network_hostname;
 	networkConfig->ssid 		= network_ssid;
 	networkConfig->key 		= network_key;
+	networkConfig->encryption 	= network_encryption ? "WPA2" : "WPA";
 
 	networkConfig->commitConfig();
 	changeNotify(LOCALE_NETWORKMENU_SELECT_IF, NULL);
