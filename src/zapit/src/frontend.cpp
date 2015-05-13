@@ -3,6 +3,7 @@
  *
  * (C) 2002-2003 Andreas Oberritter <obi@tuxbox.org>
  *
+ * (C) 2007-2013,2015 Stefan Seyfried
  * Copyright (C) 2011 CoolStream International Ltd 
  *
  * This program is free software; you can redistribute it and/or modify
