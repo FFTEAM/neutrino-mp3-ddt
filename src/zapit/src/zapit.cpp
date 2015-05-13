@@ -2206,13 +2206,7 @@ bool CZapit::StartPlayBack(CZapitChannel *thisChannel)
 		CFEManager::getInstance()->Open();
 		return true;
 	}
-#if 0
-	if (IS_WEBTV(thisChannel->getChannelID())) {
-		INFO("WEBTV channel\n");
-		SendEvent(CZapitClient::EVT_WEBTV_ZAP_COMPLETE, &live_channel_id, sizeof(t_channel_id));
-		return true;
-	}
-#endif
+
 	unsigned short pcr_pid = thisChannel->getPcrPid();
 	unsigned short audio_pid = thisChannel->getAudioPid();
 	unsigned short video_pid = (currentMode & TV_MODE) ? thisChannel->getVideoPid() : 0;
@@ -2288,12 +2282,6 @@ bool CZapit::StopPlayBack(bool send_pmt, bool blank)
 	if(send_pmt)
 		CCamManager::getInstance()->Stop(live_channel_id, CCamManager::PLAY);
 
-#if 0
-	if (current_channel && IS_WEBTV(current_channel->getChannelID())) {
-		playing = false;
-		return true;
-	}
-#endif
 
 	if (!playing)
 		return true;
